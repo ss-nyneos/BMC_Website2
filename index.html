@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <title>Bombay Mercantile Co-operative Bank: Zamana Naya. Bharosa Wohi.</title>
+    <meta
+      name="description"
+      content="India's first scheduled urban co-operative bank. Savings, current and term deposit accounts, home, gold and vehicle loans, foreign exchange and net banking across ten states since 1939."
+    />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <script>
+      // Applied before first paint so the page never flashes the wrong theme.
+      // The site opens light regardless of the operating system setting; dark
+      // is opt-in through the toggle, and that choice is then remembered.
+      (function () {
+        try {
+          if (localStorage.getItem("bmc-theme") === "dark") {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {
+          /* private mode: fall through to light */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

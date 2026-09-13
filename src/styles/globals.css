@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Semantic neutral tokens (spec section 2, dark-mode table).
+   Accent colours are NOT redefined here: purple, blue, mint, lavender and
+   orange are identical in both themes, so text on an accent panel is always
+   the fixed `ink` or `white` token. (`purple` / `lavender` now carry the
+   brand sky blue, #3FA9F6; the names are kept as spec role-names.)
+   Values are space-separated RGB channels so Tailwind's <alpha-value> works.
+--------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --page: 255 255 255;        /* white        #FFFFFF */
+  --surface: 255 255 255;     /* white panel  #FFFFFF */
+  --field: 247 243 238;       /* cream-input  #F7F3EE */
+  --fg: 20 10 46;             /* ink          #140A2E */
+  --fg-muted: 107 100 128;    /* ink-muted    #6B6480 */
+  --line: 20 10 46;           /* used at 12% opacity */
+  --line-alpha: 0.12;
+}
+
+.dark {
+  color-scheme: dark;
+  --page: 14 7 34;            /* #0E0722 */
+  --surface: 30 20 54;        /* #1E1436 */
+  --field: 42 17 80;          /* #2A1150 */
+  --fg: 243 238 232;          /* #F3EEE8 */
+  --fg-muted: 183 174 207;    /* #B7AECF */
+  --line: 243 238 232;
+  --line-alpha: 0.16;
+}
+
+@layer base {
+  html {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-page text-fg antialiased;
+  }
+
+  /* Hairlines read at the same weight in both themes. */
+  * {
+    border-color: rgb(var(--line) / var(--line-alpha));
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* One focus treatment, everywhere. Spec section 12. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(var(--page)), 0 0 0 4px rgb(var(--fg) / 0.55);
+    border-radius: inherit;
+  }
+
+  /* On a saturated dark panel the page-coloured halo would be invisible.
+     No panel carries this today — every accent is light enough for the
+     default ring — but the utility stays for the next dark surface. */
+  .on-dark :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 0.35), 0 0 0 4px #ffffff;
+  }
+
+  ::selection {
+    background: #c2e3fc;
+    color: #140a2e;
+  }
+
+  ::placeholder {
+    color: rgb(var(--fg-muted));
+    opacity: 1;
+  }
+}
+
+@layer components {
+  /* Scroll reveal. Content is visible by default; the hidden start state is
+     only applied once JS confirms motion is allowed, so a failed script or a
+     headless render never ships a blank section. */
+  .js-motion .reveal {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+
+  .js-motion .reveal.is-in {
+    animation: rise-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .js-motion .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

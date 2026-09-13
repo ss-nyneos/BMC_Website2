@@ -1,0 +1,29 @@
+import { FacebookIcon, LinkedInIcon, XIcon, YouTubeIcon } from "../../assets/icons";
+
+const channels = [
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/bombay-mercantile-co-operative-bank", Icon: LinkedInIcon },
+  { name: "Facebook", href: "https://www.facebook.com/bmcbankltd", Icon: FacebookIcon },
+  { name: "X", href: "https://x.com/bmcbankltd", Icon: XIcon },
+  { name: "YouTube", href: "https://www.youtube.com/@bmcbankltd", Icon: YouTubeIcon },
+];
+
+/** Each link is named for a screen reader; the glyph alone is not the label. */
+export function SocialLinks() {
+  return (
+    <ul className="flex flex-wrap gap-2.5">
+      {channels.map((channel) => (
+        <li key={channel.name}>
+          <a
+            href={channel.href}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="grid h-11 w-11 place-items-center rounded-pill border border-ink/25 text-ink transition-colors duration-200 ease-out-quint hover:bg-ink hover:text-white"
+          >
+            <channel.Icon className="h-5 w-5" />
+            <span className="sr-only">{channel.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
