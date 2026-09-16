@@ -69,10 +69,10 @@ export function Tabs({ items, className = "" }: { items: TabItem[]; className?: 
               aria-controls={`${baseId}-panel-${index}`}
               tabIndex={isSelected ? 0 : -1}
               onClick={() => setSelected(index)}
-              className={`h-12 rounded-pill px-6 text-label font-medium transition-colors duration-200 ease-out-quint ${
+              className={`h-12 rounded-pill px-6 text-label font-medium transition-[background-color,color,border-color,box-shadow,transform] duration-300 ease-out-expo active:scale-[0.97] ${
                 isSelected
-                  ? "bg-purple text-ink"
-                  : "border border-line text-fg hover:bg-lavender-soft hover:text-ink"
+                  ? "bg-purple text-ink shadow-pill"
+                  : "border border-line-strong text-fg hover:-translate-y-0.5 hover:border-transparent hover:bg-lavender-soft hover:text-ink"
               }`}
             >
               {item.label}
@@ -89,9 +89,19 @@ export function Tabs({ items, className = "" }: { items: TabItem[]; className?: 
           aria-labelledby={`${baseId}-tab-${index}`}
           hidden={index !== selected}
           tabIndex={0}
-          className="mt-9 focus-visible:outline-none"
+          className="mt-9 rounded-xl"
         >
-          {item.panel}
+          {/* Keyed on selection so the incoming panel plays its entrance each
+              time; a CSS keyframe rather than a scroll reveal, because a
+              reveal inside a panel that mounts later is exactly the kind of
+              block an observer can miss. */}
+          {index === selected ? (
+            <div key={`shown-${selected}`} className="animate-rise-in">
+              {item.panel}
+            </div>
+          ) : (
+            item.panel
+          )}
         </div>
       ))}
     </div>

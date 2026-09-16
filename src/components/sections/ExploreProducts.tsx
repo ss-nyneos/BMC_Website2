@@ -18,18 +18,15 @@ export function ExploreProducts() {
     <section aria-labelledby="products-heading" className="bg-page py-4 lg:py-6">
       <Container>
         <SplitPanel
-          className="reveal"
           media={
-            <div className="flex w-full items-center justify-center rounded-2xl bg-purple p-8 sm:p-12 lg:p-16">
-              <CirclePhoto
-                photo={photos.counter}
-                id={photoId.counter}
-                className="w-full max-w-[420px]"
-              />
+            <div className="reveal-clip group flex w-full items-center justify-center rounded-2xl bg-purple p-8 shadow-inset sm:p-12 lg:p-16">
+              <div className="w-full max-w-[420px]" data-parallax="0.07">
+                <CirclePhoto photo={photos.counter} id={photoId.counter} />
+              </div>
             </div>
           }
           body={
-            <div className="flex w-full flex-col justify-center rounded-2xl border border-line bg-surface p-8 sm:p-12 lg:p-14">
+            <div className="reveal flex w-full flex-col justify-center rounded-2xl bg-surface p-8 shadow-card sm:p-12 lg:p-14">
               <h2 id="products-heading" className="max-w-[16ch] text-h2">
                 Everything you need to bank
               </h2>
@@ -38,7 +35,7 @@ export function ExploreProducts() {
                 before you apply.
               </p>
 
-              <ul className="mt-10 flex flex-col gap-3">
+              <ul className="reveal-stagger mt-10 flex flex-col gap-3">
                 {products.map((product) => (
                   <li key={product.name}>
                     <PillListRow label={product.name} href={product.href} />

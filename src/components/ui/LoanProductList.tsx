@@ -15,16 +15,18 @@ export function LoanProductList({ products }: { products: LoanProduct[] }) {
 
   if (!described) {
     return (
-      <ul className="flex flex-col border-t border-line">
+      <ul className="reveal-stagger flex flex-col border-t border-line">
         {products.map((product) => (
           <li key={product.name} className="border-b border-line">
             {product.href ? (
               <a
                 href={product.href}
-                className="group flex min-h-16 items-center justify-between gap-6 py-4 text-body-sm font-medium transition-colors duration-200 hover:text-forest dark:hover:text-lavender"
+                className="group flex min-h-16 items-center justify-between gap-6 py-4 text-body-sm font-medium transition-colors duration-300 hover:text-forest dark:hover:text-lavender"
               >
-                {product.name}
-                <CircleArrow tone="lavender" size="sm" className="group-hover:translate-x-0.5" />
+                <span className="transition-transform duration-500 ease-out-expo group-hover:translate-x-1.5">
+                  {product.name}
+                </span>
+                <CircleArrow tone="lavender" size="sm" />
               </a>
             ) : (
               <p className="flex min-h-16 items-center py-4 text-body-sm font-medium">
@@ -38,7 +40,7 @@ export function LoanProductList({ products }: { products: LoanProduct[] }) {
   }
 
   return (
-    <ul className="grid gap-4 sm:gap-5 lg:grid-cols-2">
+    <ul className="reveal-stagger grid gap-4 sm:gap-5 lg:grid-cols-2">
       {products.map((product) => {
         // The card sits on the fixed `lavender-soft` accent, so its text is the
         // fixed `ink` (at 70% for the description), never a semantic token that
@@ -57,12 +59,12 @@ export function LoanProductList({ products }: { products: LoanProduct[] }) {
             {product.href ? (
               <a
                 href={product.href}
-                className="group flex h-full flex-col rounded-2xl border border-line bg-lavender-soft p-6 text-ink transition-colors duration-200 ease-out-quint hover:bg-lavender sm:p-7"
+                className="group flex h-full flex-col rounded-2xl bg-lavender-soft p-6 text-ink shadow-inset transition-[transform,box-shadow,background-color] duration-500 ease-out-expo hover:-translate-y-1 hover:bg-lavender hover:shadow-inset-hover sm:p-7"
               >
                 {body}
               </a>
             ) : (
-              <div className="flex h-full flex-col rounded-2xl border border-line bg-lavender-soft p-6 text-ink sm:p-7">
+              <div className="flex h-full flex-col rounded-2xl bg-lavender-soft p-6 text-ink shadow-inset sm:p-7">
                 {body}
               </div>
             )}

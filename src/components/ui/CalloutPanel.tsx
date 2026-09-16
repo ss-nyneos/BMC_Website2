@@ -18,21 +18,21 @@ type CalloutPanelProps = {
  * copy, and the way onward.
  *
  * It replaces the hairline-bordered white boxes the inner pages used to end on.
- * Structure is the colour block and the pill, per the shape-and-depth rule in
- * DESIGN.md — no shadow. Every tone carries a hairline for the same reason the
- * homepage's gold panels do: they all sit close to white in luminance, so the
- * panel edge needs drawing against the page.
+ * Structure is the colour block and the pill. Every tone carries the inner
+ * shadow rather than an outline: they all sit close to white in luminance, so
+ * the panel edge needs drawing against the page, and an inset edge does that
+ * without the hard line. It pops in as it scrolls into view.
  *
  * Body copy sits at `ink/80` on every tone, never a semantic `fg` token: those
  * invert in dark mode against an accent that does not. `blue` is a role-name
  * that now draws the same sky-blue panel as `purple`.
  */
 const tones: Record<CalloutTone, { panel: string; body: string }> = {
-  purple: { panel: "border border-line bg-purple text-ink", body: "text-ink/80" },
-  mint: { panel: "border border-line bg-mint text-ink", body: "text-ink/80" },
-  sage: { panel: "border border-line bg-sage text-ink", body: "text-ink/80" },
-  lavender: { panel: "border border-line bg-lavender text-ink", body: "text-ink/80" },
-  blue: { panel: "border border-line bg-purple text-ink", body: "text-ink/80" },
+  purple: { panel: "bg-purple text-ink", body: "text-ink/80" },
+  mint: { panel: "bg-mint text-ink", body: "text-ink/80" },
+  sage: { panel: "bg-sage text-ink", body: "text-ink/80" },
+  lavender: { panel: "bg-lavender text-ink", body: "text-ink/80" },
+  blue: { panel: "bg-purple text-ink", body: "text-ink/80" },
 };
 
 export function CalloutPanel({
@@ -46,7 +46,9 @@ export function CalloutPanel({
   const t = tones[tone];
 
   return (
-    <div className={`overflow-hidden rounded-2xl p-8 sm:p-10 lg:p-12 ${t.panel} ${className}`}>
+    <div
+      className={`reveal-pop overflow-hidden rounded-2xl p-8 shadow-inset sm:p-10 lg:p-12 ${t.panel} ${className}`}
+    >
       <div className="max-w-prose">
         <h2 id={id} className="text-h3">
           {title}

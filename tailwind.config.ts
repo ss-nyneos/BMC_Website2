@@ -67,11 +67,36 @@ export default {
         meta: ["16px", { lineHeight: "1.40" }],
         fine: ["14px", { lineHeight: "1.45" }],
         legal: ["12px", { lineHeight: "1.50", letterSpacing: "0.01em" }],
+        // The one size outside the 12-38px bounds, at the client's request: the
+        // homepage hero headline only. Capped at 96px so the page is loud once,
+        // not shouting; the floor keeps "BHAROSA WOHI." on one line at 360px.
+        hero: ["clamp(2rem, 6.6vw, 6rem)", { lineHeight: "0.92", letterSpacing: "-0.02em", fontWeight: "700" }],
       },
       borderRadius: { pill: "9999px", "2xl": "32px", xl: "24px", lg: "16px" },
-      boxShadow: { menu: "0 12px 40px rgba(20,10,46,0.14)" },
+      // Depth is layered, never a single wide blur and never paired with a
+      // border. Values live in globals.css so they can change per theme.
+      //  card        white surface cards at rest
+      //  card-hover  the same card lifted under the pointer
+      //  inset       accent panels: an inner edge and a soft floor shadow
+      //  inset-hover an accent card (a link) lifted under the pointer
+      //  pill        white and sky pills that sit on colour
+      boxShadow: {
+        menu: "0 12px 40px rgba(20,10,46,0.14)",
+        card: "var(--shadow-card)",
+        "card-hover": "var(--shadow-card-hover)",
+        inset: "var(--shadow-inset)",
+        "inset-hover": "var(--shadow-inset-hover)",
+        pill: "var(--shadow-pill)",
+        "pill-hover": "var(--shadow-pill-hover)",
+      },
       maxWidth: { container: "1280px", measure: "34ch", prose: "62ch" },
-      borderColor: { line: rgb("--line") },
+      // The alpha lives in the variable, not in <alpha-value>: through the rgb()
+      // helper `border-line` rendered as solid ink, which is what drew the black
+      // outline around every white card.
+      borderColor: {
+        line: "rgb(var(--line) / var(--line-alpha))",
+        "line-strong": "rgb(var(--line) / var(--line-strong-alpha))",
+      },
       spacing: { 13: "3.25rem", 18: "4.5rem", 30: "7.5rem" },
       zIndex: {
         // Semantic scale. No arbitrary 999s anywhere in the codebase.
@@ -85,6 +110,7 @@ export default {
       },
       transitionTimingFunction: {
         "out-quint": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
         "rise-in": {
@@ -96,11 +122,28 @@ export default {
           to: { opacity: "1", transform: "scale(1)" },
         },
         "scrim-in": { from: { opacity: "0" }, to: { opacity: "1" } },
+        "pop-spin": {
+          from: { opacity: "0", transform: "scale(0.86) rotate(-8deg)" },
+          to: { opacity: "1", transform: "scale(1) rotate(0deg)" },
+        },
+        "page-in": {
+          from: { opacity: "0", transform: "translate3d(0,10px,0)" },
+          to: { opacity: "1", transform: "translate3d(0,0,0)" },
+        },
+        bob: {
+          "0%, 100%": { transform: "translate3d(0,0,0)" },
+          "50%": { transform: "translate3d(0,5px,0)" },
+        },
       },
+      // Entrances fill `backwards`, not `both`: once they finish, the element
+      // falls back to its own styles, so hover transforms still work on it.
       animation: {
         "rise-in": "rise-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both",
         "pop-in": "pop-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both",
         "scrim-in": "scrim-in 180ms ease-out both",
+        "pop-spin": "pop-spin 900ms cubic-bezier(0.16, 1, 0.3, 1) backwards",
+        "page-in": "page-in 420ms cubic-bezier(0.16, 1, 0.3, 1) backwards",
+        bob: "bob 1.8s ease-in-out infinite",
       },
     },
   },

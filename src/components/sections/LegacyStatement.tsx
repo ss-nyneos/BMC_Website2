@@ -14,9 +14,13 @@ const STATEMENT =
 
 export function LegacyStatement() {
   return (
-    <section aria-labelledby="legacy-heading" className="bg-page py-4 lg:py-6">
+    <section
+      id="our-story"
+      aria-labelledby="legacy-heading"
+      className="scroll-mt-4 bg-page py-4 lg:py-6"
+    >
       <Container>
-        <div className="rounded-2xl bg-lavender px-6 py-16 text-ink sm:px-10 sm:py-20 lg:px-16 lg:py-30">
+        <div className="reveal-pop rounded-2xl bg-lavender px-6 py-16 text-ink shadow-inset sm:px-10 sm:py-20 lg:px-16 lg:py-30">
           <h2 id="legacy-heading" className="sr-only">
             Eighty-six years of co-operative banking
           </h2>

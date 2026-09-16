@@ -41,7 +41,7 @@ export function DataTable({
       role="region"
       aria-label={caption}
       tabIndex={0}
-      className={`-mx-6 overflow-x-auto px-6 focus-visible:outline-none sm:mx-0 sm:px-0 ${className}`}
+      className={`-mx-6 overflow-x-auto px-6 sm:mx-0 sm:px-0 ${className}`}
     >
       <table className="w-full min-w-[34rem] border-collapse text-left">
         <caption className={showCaption ? "mb-4 text-meta text-fg-muted" : "sr-only"}>
@@ -66,7 +66,10 @@ export function DataTable({
 
         <tbody>
           {rows.map((row, rowIndex) => (
-            <tr key={rowIndex} className="border-b border-line last:border-b-0">
+            <tr
+              key={rowIndex}
+              className="border-b border-line transition-colors duration-200 last:border-b-0 hover:bg-fg/[0.035]"
+            >
               {row.map((cell, cellIndex) => {
                 const column = columns[cellIndex];
                 const isNumeric = column?.align === "right";

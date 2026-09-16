@@ -6,7 +6,7 @@ export function NoticeCard({ notice }: { notice: Notice }) {
   return (
     <a
       href={notice.href}
-      className="group flex items-center justify-between gap-6 rounded-2xl border border-line bg-surface p-6 transition-colors duration-200 ease-out-quint hover:bg-lavender-soft hover:text-ink sm:p-7"
+      className="group flex items-center justify-between gap-6 rounded-2xl bg-surface p-6 shadow-card transition-[transform,box-shadow,background-color,color] duration-500 ease-out-expo hover:-translate-y-1 hover:bg-lavender-soft hover:text-ink hover:shadow-card-hover sm:p-7"
     >
       <span>
         <span className="block text-body-sm font-medium">{notice.title}</span>
@@ -16,7 +16,7 @@ export function NoticeCard({ notice }: { notice: Notice }) {
           </span>
         ) : null}
       </span>
-      <CircleArrow tone="lavender" className="group-hover:translate-x-0.5" />
+      <CircleArrow tone="lavender" />
     </a>
   );
 }

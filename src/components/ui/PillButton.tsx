@@ -1,7 +1,14 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 import { CircleArrow, type ArrowTone } from "./CircleArrow";
 
-export type PillVariant = "light" | "purple" | "outline" | "solid";
+export type PillVariant =
+  | "light"
+  | "purple"
+  | "outline"
+  | "solid"
+  | "ink"
+  | "ghost-light"
+  | "ghost-ink";
 
 type Shared = {
   children: ReactNode;
@@ -32,25 +39,43 @@ type PillButtonProps = AsAnchor | AsButton;
  * accent sections of the reference use.
  */
 const variants: Record<PillVariant, { shell: string; arrow: ArrowTone }> = {
-  // For the gold accent panels: white pill with a hairline so it reads
-  // against a light background, ink arrow chip.
+  // For the accent panels: a white pill lifted off the colour by a soft
+  // layered shadow rather than an outline, ink arrow chip.
   light: {
-    shell: "border border-line bg-white text-ink hover:bg-lavender-soft",
+    shell: "bg-white text-ink shadow-pill hover:shadow-pill-hover",
     arrow: "ink",
   },
-  // For light backgrounds: gold-tinted pill, ink arrow chip.
+  // For light backgrounds: pale sky pill, ink arrow chip.
   purple: {
-    shell: "bg-lavender text-ink hover:bg-lavender-soft",
+    shell: "bg-lavender text-ink hover:bg-lavender-soft hover:shadow-pill-hover",
     arrow: "ink",
   },
-  // Hairline row, fills on hover.
+  // Hairline pill, fills on hover.
   outline: {
-    shell: "border border-line bg-transparent text-fg hover:bg-lavender-soft hover:text-ink",
+    shell:
+      "border border-line-strong bg-transparent text-fg hover:border-transparent hover:bg-lavender-soft hover:text-ink hover:shadow-pill",
     arrow: "lavender",
   },
-  // Highest-emphasis action on a light page: gold pill, hairline, ink label.
+  // Highest-emphasis action on a light page: sky pill, ink label.
   solid: {
-    shell: "border border-line bg-purple text-ink hover:bg-purple-deep",
+    shell: "bg-purple text-ink shadow-pill hover:bg-purple-deep hover:shadow-pill-hover",
+    arrow: "ink",
+  },
+  // Highest-emphasis action on a pale accent panel, where a sky pill would
+  // barely separate from the field.
+  ink: {
+    shell: "bg-ink text-white hover:bg-ink/85 hover:shadow-pill-hover",
+    arrow: "white",
+  },
+  // Secondary action over a photograph. The white hairline brightens and the
+  // pill fills on hover.
+  "ghost-light": {
+    shell: "border border-white/70 bg-[rgb(14_14_18/0.34)] text-white hover:border-white hover:bg-white hover:text-ink",
+    arrow: "white",
+  },
+  // Secondary action on a pale accent panel.
+  "ghost-ink": {
+    shell: "border border-ink/30 text-ink hover:border-ink/60 hover:bg-white/60",
     arrow: "ink",
   },
 };
@@ -74,7 +99,9 @@ export function PillButton(props: PillButtonProps) {
   const tokens = variants[variant];
   const shell = [
     "group inline-flex select-none items-center justify-between whitespace-nowrap rounded-pill",
-    "font-medium leading-none transition-colors duration-200 ease-out-quint",
+    "font-medium leading-none",
+    "transition-[color,background-color,border-color,box-shadow,transform] duration-300 ease-out-expo",
+    "hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
     "disabled:pointer-events-none disabled:opacity-50",
     sizes[size],
     tokens.shell,
@@ -86,11 +113,7 @@ export function PillButton(props: PillButtonProps) {
     <>
       <span>{children}</span>
       {showArrow ? (
-        <CircleArrow
-          tone={tokens.arrow}
-          size={size === "sm" ? "sm" : "md"}
-          className="group-hover:translate-x-0.5"
-        />
+        <CircleArrow tone={tokens.arrow} size={size === "sm" ? "sm" : "md"} />
       ) : null}
     </>
   );

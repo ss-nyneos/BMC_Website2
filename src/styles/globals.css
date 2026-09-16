@@ -17,8 +17,44 @@
   --field: 247 243 238;       /* cream-input  #F7F3EE */
   --fg: 20 10 46;             /* ink          #140A2E */
   --fg-muted: 107 100 128;    /* ink-muted    #6B6480 */
-  --line: 20 10 46;           /* used at 12% opacity */
-  --line-alpha: 0.12;
+  --line: 20 10 46;
+  --line-alpha: 0.12;         /* dividers and table rules */
+  --line-strong-alpha: 0.22;  /* outlines on pills and icon buttons */
+
+  /* Depth. Each stack is several tight layers rather than one wide blur, so a
+     card reads as resting on the page instead of floating in a haze. The
+     1px spread ring at 4-6% draws the edge a border used to draw, without the
+     hard line. */
+  --shadow-card:
+    0 0 0 1px rgb(20 10 46 / 0.05),
+    0 1px 1px rgb(20 10 46 / 0.03),
+    0 2px 4px -1px rgb(20 10 46 / 0.05),
+    0 8px 16px -6px rgb(20 10 46 / 0.07);
+  --shadow-card-hover:
+    0 0 0 1px rgb(20 10 46 / 0.05),
+    0 2px 4px -1px rgb(20 10 46 / 0.05),
+    0 12px 24px -10px rgb(20 10 46 / 0.14),
+    0 28px 48px -20px rgb(20 10 46 / 0.16);
+  /* Accent panels do not invert, so these two are the same in both themes. */
+  --shadow-inset:
+    inset 0 0 0 1px rgb(20 10 46 / 0.06),
+    inset 0 1px 0 rgb(255 255 255 / 0.45),
+    inset 0 -48px 64px -48px rgb(20 10 46 / 0.1);
+  --shadow-inset-hover:
+    inset 0 0 0 1px rgb(20 10 46 / 0.06),
+    inset 0 1px 0 rgb(255 255 255 / 0.45),
+    0 12px 24px -10px rgb(20 10 46 / 0.18),
+    0 28px 48px -20px rgb(20 10 46 / 0.18);
+  --shadow-pill:
+    0 0 0 1px rgb(20 10 46 / 0.06),
+    0 1px 2px rgb(20 10 46 / 0.06),
+    0 3px 8px -3px rgb(20 10 46 / 0.1);
+  --shadow-pill-hover:
+    0 0 0 1px rgb(20 10 46 / 0.06),
+    0 6px 12px -4px rgb(20 10 46 / 0.16),
+    0 14px 24px -12px rgb(20 10 46 / 0.2);
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark {
@@ -29,7 +65,33 @@
   --fg: 243 238 232;          /* #F3EEE8 */
   --fg-muted: 183 174 207;    /* #B7AECF */
   --line: 243 238 232;
-  --line-alpha: 0.16;
+  --line-alpha: 0.14;
+  --line-strong-alpha: 0.26;
+
+  /* On a near-black page a drop shadow barely registers, so the edge comes
+     from a faint cream ring and a top highlight, and the drop shadow is
+     heavier to still separate the card when it lifts. */
+  --shadow-card:
+    0 0 0 1px rgb(243 238 232 / 0.08),
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 2px 4px rgb(0 0 0 / 0.3),
+    0 10px 20px -8px rgb(0 0 0 / 0.45);
+  --shadow-card-hover:
+    0 0 0 1px rgb(243 238 232 / 0.14),
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 14px 28px -10px rgb(0 0 0 / 0.6),
+    0 30px 52px -20px rgb(0 0 0 / 0.55);
+  --shadow-inset-hover:
+    inset 0 0 0 1px rgb(20 10 46 / 0.06),
+    inset 0 1px 0 rgb(255 255 255 / 0.45),
+    0 14px 28px -10px rgb(0 0 0 / 0.6),
+    0 30px 52px -20px rgb(0 0 0 / 0.55);
+  --shadow-pill:
+    0 0 0 1px rgb(243 238 232 / 0.1),
+    0 2px 6px -2px rgb(0 0 0 / 0.45);
+  --shadow-pill-hover:
+    0 0 0 1px rgb(243 238 232 / 0.16),
+    0 8px 16px -6px rgb(0 0 0 / 0.55);
 }
 
 @layer base {
@@ -56,18 +118,29 @@
     text-wrap: pretty;
   }
 
-  /* One focus treatment, everywhere. Spec section 12. */
+  /* One focus treatment, everywhere. Spec section 12.
+     An outline, not a box-shadow: cards now carry shadow utilities, and a
+     utility-layer box-shadow would silently replace a box-shadow ring. The
+     outline follows the element's own radius in every current browser. */
   :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px rgb(var(--page)), 0 0 0 4px rgb(var(--fg) / 0.55);
-    border-radius: inherit;
+    outline: 2px solid rgb(var(--fg) / 0.72);
+    outline-offset: 3px;
   }
 
-  /* On a saturated dark panel the page-coloured halo would be invisible.
-     No panel carries this today — every accent is light enough for the
-     default ring — but the utility stays for the next dark surface. */
+  /* On a dark photograph or a deep panel the ink ring would disappear. */
   .on-dark :where(a, button, input, select, textarea, [tabindex]):focus-visible {
-    box-shadow: 0 0 0 2px rgb(0 0 0 / 0.35), 0 0 0 4px #ffffff;
+    outline-color: #ffffff;
+  }
+
+  /* A pale panel set inside a dark surface takes the ink ring back. */
+  .on-dark .on-light :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-color: rgb(20 10 46 / 0.8);
+  }
+
+  /* A brand-blue surface does not invert, so in dark mode the cream `fg` ring
+     would sit on sky blue. It keeps the ink ring in both themes. */
+  .on-accent :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-color: rgb(20 10 46 / 0.8);
   }
 
   ::selection {
@@ -82,18 +155,270 @@
 }
 
 @layer components {
-  /* Scroll reveal. Content is visible by default; the hidden start state is
-     only applied once JS confirms motion is allowed, so a failed script or a
-     headless render never ships a blank section. */
-  .js-motion .reveal {
+  /* -------------------------------------------------------------------------
+     Scroll reveals.
+
+     Content is visible by default. The hidden start state applies only once
+     JS has confirmed motion is allowed (`js-motion` on <html>) AND only until
+     the observer marks the block `is-in`, so a failed script, a headless
+     render or reduced motion never ships a blank section.
+
+     Every variant fills `backwards`: when the entrance ends the element drops
+     back to its own styles, which is what keeps card hover lifts working on
+     an element that was revealed.
+
+       reveal          rise and fade, for text blocks
+       reveal-pop      rise with a slight scale, for single panels
+       reveal-clip     the panel opens from a rounded inset, for photo panels
+       reveal-stagger  the element's children pop in one after another
+  ------------------------------------------------------------------------- */
+  .js-motion .reveal:not(.is-in) {
     opacity: 0;
-    transform: translate3d(0, 16px, 0);
+    transform: translate3d(0, 28px, 0);
   }
 
   .js-motion .reveal.is-in {
-    animation: rise-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: rise-in 900ms var(--ease-expo) backwards;
     animation-delay: var(--reveal-delay, 0ms);
   }
+
+  .js-motion .reveal-pop:not(.is-in) {
+    opacity: 0;
+    transform: translate3d(0, 32px, 0) scale(0.96);
+  }
+
+  .js-motion .reveal-pop.is-in {
+    animation: pop-rise 1000ms var(--ease-expo) backwards;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js-motion .reveal-clip:not(.is-in) {
+    clip-path: inset(10% 8% 10% 8% round 32px);
+    opacity: 0.2;
+  }
+
+  .js-motion .reveal-clip.is-in {
+    animation: clip-open 1100ms var(--ease-expo) backwards;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js-motion .reveal-stagger:not(.is-in) > * {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) scale(0.97);
+  }
+
+  .js-motion .reveal-stagger.is-in > * {
+    animation: pop-rise 850ms var(--ease-expo) backwards;
+  }
+
+  .js-motion .reveal-stagger.is-in > :nth-child(2) { animation-delay: 70ms; }
+  .js-motion .reveal-stagger.is-in > :nth-child(3) { animation-delay: 140ms; }
+  .js-motion .reveal-stagger.is-in > :nth-child(4) { animation-delay: 210ms; }
+  .js-motion .reveal-stagger.is-in > :nth-child(5) { animation-delay: 280ms; }
+  .js-motion .reveal-stagger.is-in > :nth-child(6) { animation-delay: 350ms; }
+  .js-motion .reveal-stagger.is-in > :nth-child(7) { animation-delay: 420ms; }
+  .js-motion .reveal-stagger.is-in > :nth-child(n + 8) { animation-delay: 490ms; }
+
+  /* The timeline draws itself: each connecting rail grows downward and each
+     dot pops, in step order. `--i` is the step index, set inline. */
+  .js-motion .reveal:not(.is-in) .timeline-rail {
+    transform: scaleY(0);
+  }
+
+  .js-motion .reveal:not(.is-in) .timeline-dot {
+    transform: scale(0);
+  }
+
+  .js-motion .reveal.is-in .timeline-rail {
+    transform-origin: top;
+    animation: draw-down 900ms var(--ease-expo) backwards;
+    animation-delay: calc(var(--i, 0) * 160ms + 320ms);
+  }
+
+  .js-motion .reveal.is-in .timeline-dot {
+    animation: dot-pop 600ms var(--ease-expo) backwards;
+    animation-delay: calc(var(--i, 0) * 160ms + 220ms);
+  }
+
+  /* -------------------------------------------------------------------------
+     Homepage hero.
+
+     One orchestrated entrance, then a scroll-linked parallax. `--hero-p` runs
+     0 -> 1 as the hero scrolls out of view and is written by `Hero` on each
+     animation frame; nothing here reads layout.
+  ------------------------------------------------------------------------- */
+  .hero-photo {
+    transform: translate3d(0, calc(var(--hero-p, 0) * 24%), 0);
+    will-change: transform;
+  }
+
+  .hero-photo img {
+    transform: scale(1.06);
+    animation: hero-photo 1800ms var(--ease-expo) backwards;
+  }
+
+  .hero-dim {
+    opacity: calc(var(--hero-p, 0) * 0.75);
+  }
+
+  .hero-copy {
+    transform: translate3d(0, calc(var(--hero-p, 0) * -160px), 0);
+    opacity: calc(1 - var(--hero-p, 0) * 1.25);
+  }
+
+  .hero-story-wrap {
+    transform: translate3d(0, calc(var(--hero-p, 0) * -110px), 0);
+  }
+
+  .hero-brand {
+    animation: slide-in-left 1000ms var(--ease-expo) 80ms backwards;
+  }
+
+  .hero-brand-cut {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 44px), calc(100% - 44px) 100%, 0 100%);
+  }
+
+  /* Each headline line rises out of its own mask. The padding and matching
+     negative margin keep the mask from shaving the tops of the capitals. */
+  .hero-line {
+    display: block;
+    overflow: hidden;
+    padding-block: 0.08em;
+    margin-block: -0.08em;
+  }
+
+  .hero-line > span {
+    display: block;
+    animation: line-up 1100ms var(--ease-expo) backwards;
+  }
+
+  .hero-panel {
+    clip-path: polygon(0 0, calc(100% - 64px) 0, 100% 64px, 100% 100%, 0 100%);
+    animation: panel-wipe 1100ms var(--ease-expo) 520ms backwards;
+  }
+
+  .hero-fade {
+    animation: fade-up 900ms var(--ease-expo) backwards;
+  }
+
+  /* -------------------------------------------------------------------------
+     Full-screen menu.
+
+     The sheet drops in from above, like the page scrolling into place, then
+     its contents follow: the headline links rise out of their own masks, as
+     the hero's lines do, and the groups fade up after them. `--i` is each
+     item's stagger index, set inline.
+
+     Transitions rather than keyframes, so a toggle mid-flight reverses from
+     where it is. A transition runs with the timing of the state it is heading
+     TO, which is what splits the two directions:
+       opening  eases out slowly, with the stagger
+       closing  the sheet leaves faster than it came, and the contents stay put
+                until it has gone, then snap back unseen, ready for next time
+  ------------------------------------------------------------------------- */
+  .menu-panel {
+    transform: translate3d(0, -100%, 0);
+    transition: transform 460ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  .menu-panel.is-open {
+    transform: translate3d(0, 0, 0);
+    transition: transform 760ms var(--ease-expo);
+  }
+
+  .menu-line {
+    display: block;
+    overflow: hidden;
+    padding-block: 0.08em;
+    margin-block: -0.08em;
+  }
+
+  .menu-rise {
+    position: relative;
+    display: block;
+    transform: translate3d(0, 110%, 0);
+    transition: transform 0s linear 460ms;
+  }
+
+  .menu-panel.is-open .menu-rise {
+    transform: translate3d(0, 0, 0);
+    transition: transform 900ms var(--ease-expo) calc(var(--i, 0) * 55ms + 260ms);
+  }
+
+  .menu-fade {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    transition:
+      opacity 0s linear 460ms,
+      transform 0s linear 460ms;
+  }
+
+  .menu-panel.is-open .menu-fade {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition:
+      opacity 700ms var(--ease-expo) calc(var(--i, 0) * 60ms + 360ms),
+      transform 900ms var(--ease-expo) calc(var(--i, 0) * 60ms + 360ms);
+  }
+
+  /* A tight shade hugging the glyphs, so white type stays legible over a
+     bright photograph without laying a dark haze across the whole frame. */
+  .hero-halo {
+    text-shadow:
+      0 1px 2px rgb(14 14 18 / 0.5),
+      0 2px 16px rgb(14 14 18 / 0.5),
+      0 4px 40px rgb(14 14 18 / 0.4);
+  }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translate3d(0, 28px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes pop-rise {
+  from { opacity: 0; transform: translate3d(0, 32px, 0) scale(0.96); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes clip-open {
+  from { clip-path: inset(10% 8% 10% 8% round 32px); opacity: 0.2; }
+  to { clip-path: inset(0% 0% 0% 0% round 32px); opacity: 1; }
+}
+
+@keyframes draw-down {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes dot-pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes hero-photo {
+  from { opacity: 0.2; transform: scale(1.18); }
+  to { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes line-up {
+  from { transform: translate3d(0, 110%, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes slide-in-left {
+  from { transform: translate3d(-100%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes panel-wipe {
+  from { clip-path: polygon(0 100%, calc(100% - 64px) 100%, 100% 100%, 100% 100%, 0 100%); }
+  to { clip-path: polygon(0 0, calc(100% - 64px) 0, 100% 64px, 100% 100%, 0 100%); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -101,17 +426,30 @@
     scroll-behavior: auto;
   }
 
+  /* Delays are zeroed too: with `backwards` fill, a delay alone would hold an
+     element hidden for its delay and then snap it in. */
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
 
-  .js-motion .reveal {
-    opacity: 1;
+  .hero-photo,
+  .hero-copy,
+  .hero-story-wrap {
     transform: none;
+    opacity: 1;
+  }
+
+  /* The global rule shortens transitions but leaves their delays, which would
+     hold the menu's contents back and then snap them in. */
+  .menu-panel,
+  .menu-rise,
+  .menu-fade {
+    transition-delay: 0ms !important;
   }
 }

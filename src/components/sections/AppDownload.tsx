@@ -20,7 +20,7 @@ export function AppDownload() {
   return (
     <section aria-labelledby="app-heading" className="bg-page py-4 lg:py-6">
       <Container>
-        <div className="reveal overflow-hidden rounded-2xl border border-line bg-purple px-6 py-14 text-ink sm:px-10 sm:py-16 lg:px-16">
+        <div className="reveal-clip group overflow-hidden rounded-2xl bg-purple px-6 py-14 text-ink shadow-inset sm:px-10 sm:py-16 lg:px-16">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
             <div>
               <h2 id="app-heading" className="max-w-[16ch] text-h2">
@@ -34,7 +34,7 @@ export function AppDownload() {
               <BulletList
                 variant="current"
                 size="body-sm"
-                className="mt-9 text-ink/80"
+                className="reveal-stagger mt-9 text-ink/80"
                 items={[
                   "Works on Android and iOS",
                   "UPI, NEFT, RTGS and IMPS in one place",
@@ -63,17 +63,19 @@ export function AppDownload() {
               </div>
             </div>
 
-            <div className="mx-auto w-full max-w-[380px]">
-              <img
-                src={photos.devices.src}
-                srcSet={srcSet(photoId.devices, photos.devices.width, photos.devices.height)}
-                alt={photos.devices.alt}
-                width={photos.devices.width}
-                height={photos.devices.height}
-                loading="lazy"
-                decoding="async"
-                className="h-auto w-full rounded-xl object-cover"
-              />
+            <div className="mx-auto w-full max-w-[380px]" data-parallax="0.08">
+              <div className="overflow-hidden rounded-xl shadow-card-hover">
+                <img
+                  src={photos.devices.src}
+                  srcSet={srcSet(photoId.devices, photos.devices.width, photos.devices.height)}
+                  alt={photos.devices.alt}
+                  width={photos.devices.width}
+                  height={photos.devices.height}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-auto w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
+                />
+              </div>
             </div>
           </div>
         </div>

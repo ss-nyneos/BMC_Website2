@@ -24,9 +24,9 @@ import {
  * themes — the same pairing `ColorCard` uses.
  */
 const figureTones = [
-  "border border-line bg-purple",
-  "border border-line bg-mint",
-  "border border-line bg-sage",
+  "bg-purple shadow-inset",
+  "bg-mint shadow-inset",
+  "bg-sage shadow-inset",
 ];
 
 export function ShareholderPage() {
@@ -47,7 +47,7 @@ export function ShareholderPage() {
             Membership figures
           </h2>
 
-          <dl className="grid gap-4 sm:gap-5 lg:grid-cols-3">
+          <dl className="reveal-stagger grid gap-4 sm:gap-5 lg:grid-cols-3">
             {shareholderFigures.map((figure, index) => (
               <div
                 key={figure.label}

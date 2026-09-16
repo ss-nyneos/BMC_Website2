@@ -26,8 +26,8 @@ const stores = [
 export function AppBadges({ tone = "light" }: { tone?: "light" | "dark" }) {
   const shell =
     tone === "light"
-      ? "border border-line bg-white text-ink hover:bg-lavender-soft"
-      : "border border-line text-fg hover:bg-lavender-soft hover:text-ink";
+      ? "bg-white text-ink shadow-pill hover:shadow-pill-hover"
+      : "border border-line-strong text-fg hover:border-transparent hover:bg-lavender-soft hover:text-ink";
 
   return (
     <ul className="flex flex-wrap gap-3">
@@ -37,7 +37,7 @@ export function AppBadges({ tone = "light" }: { tone?: "light" | "dark" }) {
             href={store.href}
             target="_blank"
             rel="noreferrer noopener"
-            className={`flex h-14 items-center gap-3 rounded-pill px-6 transition-colors duration-200 ease-out-quint ${shell}`}
+            className={`flex h-14 items-center gap-3 rounded-pill px-6 transition-[background-color,color,border-color,box-shadow,transform] duration-300 ease-out-expo hover:-translate-y-0.5 active:scale-[0.98] ${shell}`}
           >
             <store.Glyph className="h-6 w-6" />
             <span className="leading-tight">

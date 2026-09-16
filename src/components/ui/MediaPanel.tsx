@@ -23,6 +23,9 @@ type MediaPanelProps = {
  * tone is light enough to keep the default focus ring. Text is never placed on
  * this panel, so there is no contrast pairing to hold beyond the photo's own
  * ring.
+ *
+ * The panel opens from a rounded inset as it scrolls into view, the photograph
+ * drifts gently against the scroll, and it zooms slightly under the pointer.
  */
 const tones: Record<MediaTone, string> = {
   blue: "bg-purple",
@@ -40,9 +43,9 @@ export function MediaPanel({
 }: MediaPanelProps) {
   return (
     <div
-      className={`flex w-full items-center justify-center rounded-2xl p-8 sm:p-12 lg:p-16 ${tones[tone]} ${className}`}
+      className={`reveal-clip group flex w-full items-center justify-center rounded-2xl p-8 shadow-inset sm:p-12 lg:p-16 ${tones[tone]} ${className}`}
     >
-      <div className="w-full" style={{ maxWidth }}>
+      <div className="w-full" style={{ maxWidth }} data-parallax="0.06">
         <CirclePhoto photo={photo} id={id} />
       </div>
     </div>

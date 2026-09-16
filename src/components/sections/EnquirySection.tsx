@@ -28,7 +28,7 @@ export function EnquirySection() {
             <h3 className="mt-12 text-h3">Why bank with BMC</h3>
             <BulletList
               variant="orange"
-              className="mt-7"
+              className="reveal-stagger mt-7"
               items={whyBmc.map((item) => item.text)}
             />
 
@@ -43,7 +43,7 @@ export function EnquirySection() {
             </figure>
           </div>
 
-          <div className="reveal">
+          <div className="reveal-pop">
             <EnquiryForm />
           </div>
         </div>

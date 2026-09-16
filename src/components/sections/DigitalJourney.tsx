@@ -19,17 +19,14 @@ export function DigitalJourney() {
       <Container>
         <SplitPanel
           reverse
-          className="reveal"
           media={
-            <div className="flex w-full flex-col items-center justify-center rounded-2xl bg-purple px-6 py-14 text-ink sm:px-10 lg:py-16">
+            <div className="reveal-clip group flex w-full flex-col items-center justify-center rounded-2xl bg-purple px-6 py-14 text-ink shadow-inset sm:px-10 lg:py-16">
               <h2 id="digital-heading" className="w-full text-center text-display">
                 <span className="block">Digital</span>
                 <span className="my-6 block px-4 sm:my-8">
-                  <CirclePhoto
-                    photo={photos.mobile}
-                    id={photoId.mobile}
-                    className="mx-auto w-full max-w-[300px]"
-                  />
+                  <span className="mx-auto block w-full max-w-[300px]" data-parallax="0.05">
+                    <CirclePhoto photo={photos.mobile} id={photoId.mobile} />
+                  </span>
                 </span>
                 <span className="block">banking</span>
               </h2>

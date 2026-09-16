@@ -77,14 +77,14 @@ export function DeaFundPage() {
             description="Each list opens as a spreadsheet on Google Sheets."
           />
 
-          <ul className="mt-10 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+          <ul className="reveal-stagger mt-10 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {deafDocuments.map((document) => (
               <li key={document.label}>
                 <a
                   href={document.href}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="group flex min-h-[4.5rem] items-center justify-between gap-5 rounded-2xl border border-line bg-lavender-soft p-6 text-ink transition-colors duration-200 ease-out-quint hover:bg-lavender"
+                  className="group flex min-h-[4.5rem] items-center justify-between gap-5 rounded-2xl bg-lavender-soft p-6 text-ink shadow-inset transition-[transform,box-shadow,background-color] duration-500 ease-out-expo hover:-translate-y-1 hover:bg-lavender hover:shadow-inset-hover"
                 >
                   <span className="text-body-sm font-medium">
                     {document.label}

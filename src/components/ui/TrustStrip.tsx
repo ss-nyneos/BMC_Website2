@@ -17,7 +17,7 @@ export function TrustStrip() {
           Deposit insurance, complaints and security
         </h2>
 
-        <div className="grid gap-9 lg:grid-cols-3 lg:gap-12">
+        <div className="reveal-stagger grid gap-9 lg:grid-cols-3 lg:gap-12">
           <div className="flex items-start gap-4">
             <ShieldIcon className="mt-0.5 h-7 w-7 shrink-0 text-forest dark:text-lavender" />
             <div>

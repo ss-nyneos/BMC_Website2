@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { ProcessColumn, ProcessStep } from "../../types";
 
 /**
@@ -25,22 +26,30 @@ const rails = {
 function TimelineStep({
   step,
   tone,
+  index,
   isLast,
 }: {
   step: ProcessStep;
   tone: "orange" | "blue";
+  index: number;
   isLast: boolean;
 }) {
+  // `--i` sequences the draw-in in globals.css: each dot pops, then the rail
+  // below it grows down to the next step.
+  const order = { "--i": index } as CSSProperties;
+
   return (
     <li className="relative pb-11 pl-10 last:pb-0">
       <span
         aria-hidden="true"
-        className={`absolute left-[5px] top-2 h-3.5 w-3.5 rounded-pill ${dots[tone]}`}
+        style={order}
+        className={`timeline-dot absolute left-[5px] top-2 h-3.5 w-3.5 rounded-pill ${dots[tone]}`}
       />
       {!isLast ? (
         <span
           aria-hidden="true"
-          className={`absolute bottom-2 left-[11px] top-7 w-0.5 rounded-pill bg-gradient-to-b ${rails[tone]}`}
+          style={order}
+          className={`timeline-rail absolute bottom-2 left-[11px] top-7 w-0.5 rounded-pill bg-gradient-to-b ${rails[tone]}`}
         />
       ) : null}
 
@@ -82,6 +91,7 @@ export function Timeline({ columns }: { columns: ProcessColumn[] }) {
                 key={step.title}
                 step={step}
                 tone={column.tone}
+                index={index}
                 isLast={index === column.steps.length - 1}
               />
             ))}

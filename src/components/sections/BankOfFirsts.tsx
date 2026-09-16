@@ -20,25 +20,22 @@ export function BankOfFirsts() {
       <Container>
         <SplitPanel
           reverse
-          className="reveal"
           media={
-            <div className="flex w-full items-center justify-center rounded-2xl bg-purple p-8 sm:p-12 lg:p-16">
-              <CirclePhoto
-                photo={photos.heritage}
-                id={photoId.heritage}
-                className="w-full max-w-[420px]"
-              />
+            <div className="reveal-clip group flex w-full items-center justify-center rounded-2xl bg-purple p-8 shadow-inset sm:p-12 lg:p-16">
+              <div className="w-full max-w-[420px]" data-parallax="0.07">
+                <CirclePhoto photo={photos.heritage} id={photoId.heritage} />
+              </div>
             </div>
           }
           body={
-            <div className="flex w-full flex-col justify-center rounded-2xl border border-line bg-surface p-8 sm:p-12 lg:p-14">
+            <div className="reveal flex w-full flex-col justify-center rounded-2xl bg-surface p-8 shadow-card sm:p-12 lg:p-14">
               <h2 id="firsts-heading" className="text-h2">
                 A bank of firsts
               </h2>
 
               <BulletList
                 variant="blue"
-                className="mt-9"
+                className="reveal-stagger mt-9"
                 items={firsts.map((item) => emphasise(item.text, item.emphasis))}
               />
 

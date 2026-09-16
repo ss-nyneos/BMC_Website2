@@ -10,17 +10,17 @@ import { photoId } from "../../data/photos";
  * Three, not six. The page already routes to individual products through the
  * pill rows above, so this block only has to answer "which of these am I?".
  */
-const ids = [photoId.personal, photoId.business, photoId.overseas];
+const ids = [photoId.pillarPersonal, photoId.pillarBusiness, photoId.pillarOverseas];
 
 export function PillarCards() {
   return (
     <Section bg="page" padY="lg" aria-labelledby="pillars-heading">
       <Container>
-        <h2 id="pillars-heading" className="max-w-[20ch] text-h2">
+        <h2 id="pillars-heading" className="reveal max-w-[20ch] text-h2">
           Find your way in
         </h2>
 
-        <div className="reveal mt-12 grid gap-4 sm:gap-5 lg:grid-cols-3">
+        <div className="reveal-stagger mt-12 grid gap-4 sm:gap-5 lg:grid-cols-3">
           {pillars.map((pillar, index) => (
             <ColorCard
               key={pillar.title}

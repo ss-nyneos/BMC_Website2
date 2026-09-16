@@ -21,9 +21,42 @@ export function srcSet(id: string, width: number, height: number) {
   return `${unsplash(id, width, height)} 1x, ${unsplash(id, width * 2, height * 2, 70)} 2x`;
 }
 
+/**
+ * Width-described sources for a fluid slot such as the full-bleed hero, so a
+ * phone is not sent the 2560px file. `ratio` is width / height of the crop;
+ * `anchor` keeps that edge of the photograph when the crop removes some of it.
+ */
+export function fluidSrcSet(
+  id: string,
+  ratio: number,
+  widths: number[] = [800, 1280, 1920, 2560],
+  anchor?: "top" | "bottom",
+) {
+  return widths
+    .map((width) => {
+      const url = unsplash(id, width, Math.round(width / ratio), width > 1600 ? 70 : 76);
+      return `${anchor ? `${url}&crop=${anchor}` : url} ${width}w`;
+    })
+    .join(", ");
+}
+
 type PhotoSpec = { id: string; alt: string; width: number; height: number };
 
 const spec = {
+  // Full-bleed hero backdrop. A public landmark near the head office, not the
+  // bank's own building, and the alt text says so by naming what it is.
+  heroCity: {
+    id: "photo-1710838106560-9af2f9f748c0",
+    alt: "Chhatrapati Shivaji Maharaj Terminus in south Mumbai on a sunny day, seen past the statue of Sir Pherozeshah Mehta, with trees and traffic in front.",
+    width: 2400,
+    height: 1600,
+  },
+  story: {
+    id: "photo-1529253355930-ddbe423a2ac7",
+    alt: "The Gateway of India in Mumbai, reflected in a rain puddle under an overcast sky.",
+    width: 560,
+    height: 350,
+  },
   heroWoman: {
     id: "photo-1604514628550-37477afdf4e3",
     alt: "A woman with long dark hair looking directly at the camera in soft daylight.",
@@ -75,6 +108,27 @@ const spec = {
   overseas: {
     id: "photo-1595658658481-d53d3f999875",
     alt: "The Gateway of India seen across the harbour on a clear day.",
+    width: 520,
+    height: 520,
+  },
+  // The "Find your way in" trio. Separate from `personal` / `business` /
+  // `overseas`, which the inner-page headers still use: each of these is chosen
+  // to show the card's own subject rather than a generic portrait or landmark.
+  pillarPersonal: {
+    id: "photo-1657912230234-87f45165424d",
+    alt: "A smiling man and woman outdoors under trees, with a baby in blue overalls between them.",
+    width: 520,
+    height: 520,
+  },
+  pillarBusiness: {
+    id: "photo-1780504863007-44f229d4d33f",
+    alt: "A tailor in his workshop, stitching pink fabric on an old black sewing machine.",
+    width: 520,
+    height: 520,
+  },
+  pillarOverseas: {
+    id: "photo-1657358846130-3305fd8fcd30",
+    alt: "A hand holding a passport and boarding pass in an airport terminal, a traveller wheeling a suitcase behind.",
     width: 520,
     height: 520,
   },

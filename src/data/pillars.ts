@@ -8,20 +8,20 @@ export const pillars: Pillar[] = [
     caption: "Savings, deposits, home and gold loans",
     href: "/accounts/savings",
     tone: "purple",
-    photo: photos.personal,
+    photo: photos.pillarPersonal,
   },
   {
     title: "Business banking",
     caption: "Current accounts, working capital, trade",
     href: "/loans/working-capital",
     tone: "mint",
-    photo: photos.business,
+    photo: photos.pillarBusiness,
   },
   {
     title: "NRI and foreign exchange",
     caption: "Remittance, forex cards, overseas transfers",
     href: "/services/forex",
     tone: "blue",
-    photo: photos.overseas,
+    photo: photos.pillarOverseas,
   },
 ];

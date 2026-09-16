@@ -14,7 +14,7 @@ export function ProcessTimeline() {
   return (
     <Section bg="white" padY="lg" aria-labelledby="process-heading">
       <Container>
-        <h2 id="process-heading" className="max-w-[20ch] text-h2">
+        <h2 id="process-heading" className="reveal max-w-[20ch] text-h2">
           What happens after you apply
         </h2>
 

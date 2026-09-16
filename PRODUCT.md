@@ -30,7 +30,8 @@ These come from the design brief and override any default preference:
 
 - **Stack:** React, TypeScript, Tailwind. No other runtime dependency.
 - **Type:** Helvetica Neue / Helvetica / Arial only. Never below 12px, never
-  above 38px, at any breakpoint.
+  above 38px, at any breakpoint, with one exception the client asked for: the
+  homepage hero headline, which runs to 96px.
 - **Palette:** the brief's colours. Purple `#5A189A`, blue `#2E68F0`,
   mint `#8CE6A6`, lavender `#C6ABF7`, orange `#EF5F2A`, ink `#140A2E`.
   One deliberate departure from the brief: the page background is white, not
@@ -39,8 +40,12 @@ These come from the design brief and override any default preference:
   to; dark is opt-in through the toggle and is then remembered.
 - **Shape:** pill buttons with a circular arrow chip; photographs masked to
   perfect circles; 32px radius on large panels.
-- **Structure:** colour-blocked panels, not cards with drop shadows. The only
-  shadow in the system is on menus and modals.
+- **Structure:** colour-blocked panels. At the client's request, white cards
+  rest on a layered shadow and accent panels carry an inner shadow; neither
+  takes a visible outline. Borders survive only as hairline dividers.
+- **Motion:** the client asked for a lively site: a scroll parallax on the
+  hero, scroll reveals, and hover and pop-up feedback. All of it is native
+  (no animation library), and all of it is off under reduced motion.
 
 ## What the site must never do
 

@@ -55,7 +55,7 @@ export function NewsNotices() {
   return (
     <Section bg="page" padY="lg" aria-labelledby="news-heading">
       <Container>
-        <h2 id="news-heading" className="max-w-[20ch] text-h2">
+        <h2 id="news-heading" className="reveal max-w-[20ch] text-h2">
           Notices and downloads
         </h2>
         <Tabs items={items} className="reveal mt-10" />
