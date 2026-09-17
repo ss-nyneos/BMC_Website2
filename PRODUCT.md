@@ -16,10 +16,14 @@ the whole direction: a bold, modern shell carrying traditional banking trust.
 Three audiences, addressed in this order on the homepage:
 
 1. **Rate shoppers.** Arriving from a comparison, wanting the housing, gold or
-   vehicle loan rate before any narrative. They get it directly under the hero.
+   vehicle loan rate before any narrative. They get it straight after the hero
+   and the one-paragraph bank statement, which the client asked to lead
+   (2026-09-17).
 2. **Prospective account holders.** Deciding whether an 86-year-old
-   co-operative bank is safe and modern enough. They get the firsts, deposit
-   insurance, and a published timeline of what happens after they apply.
+   co-operative bank is safe and modern enough. They get the product cards, an
+   "Open your account" flow straight after the loans card, the published
+   timeline of what happens after they apply directly below it, and the bank's
+   heritage and firsts further down.
 3. **Existing customers.** Returning for a form, a notice, an IFSC code or the
    complaint route. Those live in the second half of the page and in the footer,
    which mirrors the primary navigation in full.
@@ -38,6 +42,12 @@ These come from the design brief and override any default preference:
   cream `#F3EEE8`, at the client's request. Cream remains as the form-field
   fill. The site also opens in light mode whatever the operating system is set
   to; dark is opt-in through the toggle and is then remembered.
+  A second departure, also at the client's request (2026-09-17): everything on
+  the homepage below the lending rates is carried over from the bmc_website2
+  design, in its deep blue `#0B4DA2` with white text, and the footer and the
+  hero's brand block were recoloured to that blue so the site reads as one.
+  Those sections keep bmc_website2's own shapes too: 16px card corners and
+  rectangular buttons rather than pills.
 - **Shape:** pill buttons with a circular arrow chip; photographs masked to
   perfect circles; 32px radius on large panels.
 - **Structure:** colour-blocked panels. At the client's request, white cards

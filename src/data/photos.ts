@@ -22,41 +22,21 @@ export function srcSet(id: string, width: number, height: number) {
 }
 
 /**
- * Width-described sources for a fluid slot such as the full-bleed hero, so a
- * phone is not sent the 2560px file. `ratio` is width / height of the crop;
- * `anchor` keeps that edge of the photograph when the crop removes some of it.
+ * Full-bleed hero backdrop, the housing loan photograph. Served from `public/`
+ * rather than Unsplash, resized from the 1536x1024 original, which is also the
+ * widest file there is.
  */
-export function fluidSrcSet(
-  id: string,
-  ratio: number,
-  widths: number[] = [800, 1280, 1920, 2560],
-  anchor?: "top" | "bottom",
-) {
-  return widths
-    .map((width) => {
-      const url = unsplash(id, width, Math.round(width / ratio), width > 1600 ? 70 : 76);
-      return `${anchor ? `${url}&crop=${anchor}` : url} ${width}w`;
-    })
-    .join(", ");
-}
+export const heroPhoto = {
+  src: "/hero/home-loan-1536.jpg",
+  srcSet: "/hero/home-loan-800.webp 800w, /hero/home-loan-1200.webp 1200w, /hero/home-loan-1536.webp 1536w",
+  alt: "A loan officer going through a home loan application with a couple at a desk, a model house on the table between them.",
+  width: 1536,
+  height: 1024,
+};
 
 type PhotoSpec = { id: string; alt: string; width: number; height: number };
 
 const spec = {
-  // Full-bleed hero backdrop. A public landmark near the head office, not the
-  // bank's own building, and the alt text says so by naming what it is.
-  heroCity: {
-    id: "photo-1710838106560-9af2f9f748c0",
-    alt: "Chhatrapati Shivaji Maharaj Terminus in south Mumbai on a sunny day, seen past the statue of Sir Pherozeshah Mehta, with trees and traffic in front.",
-    width: 2400,
-    height: 1600,
-  },
-  story: {
-    id: "photo-1529253355930-ddbe423a2ac7",
-    alt: "The Gateway of India in Mumbai, reflected in a rain puddle under an overcast sky.",
-    width: 560,
-    height: 350,
-  },
   heroWoman: {
     id: "photo-1604514628550-37477afdf4e3",
     alt: "A woman with long dark hair looking directly at the camera in soft daylight.",
@@ -93,27 +73,8 @@ const spec = {
     width: 720,
     height: 720,
   },
-  personal: {
-    id: "photo-1607746882042-944635dfe10e",
-    alt: "A woman in a checked shirt smiling in a bright room.",
-    width: 520,
-    height: 520,
-  },
-  business: {
-    id: "photo-1441986300917-64674bd600d8",
-    alt: "The inside of a small independent shop, goods arranged on open shelving.",
-    width: 520,
-    height: 520,
-  },
-  overseas: {
-    id: "photo-1595658658481-d53d3f999875",
-    alt: "The Gateway of India seen across the harbour on a clear day.",
-    width: 520,
-    height: 520,
-  },
-  // The "Find your way in" trio. Separate from `personal` / `business` /
-  // `overseas`, which the inner-page headers still use: each of these is chosen
-  // to show the card's own subject rather than a generic portrait or landmark.
+  // The "Find your way in" trio: each chosen to show the card's own subject
+  // rather than a generic portrait or landmark.
   pillarPersonal: {
     id: "photo-1657912230234-87f45165424d",
     alt: "A smiling man and woman outdoors under trees, with a baby in blue overalls between them.",
@@ -149,6 +110,76 @@ const spec = {
     alt: "A man in a dark suit and glasses photographed against a plain wall.",
     width: 160,
     height: 160,
+  },
+
+  // Inner pages. Each photograph shows the page's own subject, an object or a
+  // place, and never a person: a stranger's portrait above a rate table read
+  // as a stock photo, and suggested a customer the bank does not have.
+  rupeeCoins: {
+    id: "photo-1565373679107-344d38dbf734",
+    alt: "Indian rupee coins spread across a fan of folded banknotes.",
+    width: 520,
+    height: 520,
+  },
+  calculator: {
+    id: "photo-1642043175009-5997b3a078d8",
+    alt: "A desk calculator and a pencil lying on sheets of graph paper.",
+    width: 520,
+    height: 520,
+  },
+  modelHouse: {
+    id: "photo-1709080381729-965c62ab0471",
+    alt: "A small white model house standing beside two stacks of coins.",
+    width: 520,
+    height: 520,
+  },
+  goldBangles: {
+    id: "photo-1758995116383-f51775896add",
+    alt: "A stack of patterned gold bangles on a dark surface.",
+    width: 520,
+    height: 520,
+  },
+  carKey: {
+    id: "photo-1710006548781-eff5670376fa",
+    alt: "A car key and its remote fob on a plain white surface.",
+    width: 520,
+    height: 520,
+  },
+  bangleShop: {
+    id: "photo-1760786933027-fe2ad82957f9",
+    alt: "Shop shelves stacked floor to ceiling with red, green and gold bangles.",
+    width: 520,
+    height: 520,
+  },
+  rotaryPhone: {
+    id: "photo-1525598912003-663126343e1f",
+    alt: "A black rotary telephone with its handset lifted off the cradle.",
+    width: 520,
+    height: 520,
+  },
+  oldLedger: {
+    id: "photo-1760307837453-ce60cb209e52",
+    alt: "An old ledger lying open, its pages worn soft and filled with handwriting.",
+    width: 520,
+    height: 520,
+  },
+  rubberStamp: {
+    id: "photo-1619418602850-35ad20aa1700",
+    alt: "A wooden rubber stamp resting on a printed official document.",
+    width: 520,
+    height: 520,
+  },
+  questionMark: {
+    id: "photo-1595452767427-0905ad9b036d",
+    alt: "A large question mark painted in white on a weathered brick wall.",
+    width: 520,
+    height: 520,
+  },
+  meetingHall: {
+    id: "photo-1643199021361-c2fd68cd5571",
+    alt: "Rows of empty blue and grey chairs set out in a meeting hall.",
+    width: 520,
+    height: 520,
   },
 } satisfies Record<string, PhotoSpec>;
 

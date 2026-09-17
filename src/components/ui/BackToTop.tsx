@@ -67,7 +67,7 @@ export function BackToTop() {
       type="button"
       onClick={toTop}
       aria-label="Back to top"
-      className={`group fixed bottom-5 right-5 z-sticky grid h-14 w-14 place-items-center rounded-pill bg-ink text-white shadow-pill-hover dark:bg-purple dark:text-ink transition-[opacity,transform] duration-500 ease-out-expo hover:-translate-y-1 active:scale-95 sm:bottom-8 sm:right-8 ${
+      className={`group fixed bottom-5 right-5 z-sticky grid h-14 w-14 place-items-center rounded-pill bg-ink text-white shadow-pill-hover dark:bg-[#1E7AF0] dark:text-white transition-[opacity,transform] duration-500 ease-out-expo hover:-translate-y-1 active:scale-95 sm:bottom-8 sm:right-8 ${
         visible ? "scale-100 opacity-100" : "pointer-events-none translate-y-4 scale-50 opacity-0"
       }`}
     >
@@ -78,7 +78,7 @@ export function BackToTop() {
           r={RADIUS}
           fill="none"
           strokeWidth="2.5"
-          className="stroke-white/20 dark:stroke-ink/15"
+          className="stroke-white/20 dark:stroke-white/25"
         />
         <circle
           ref={ringRef}
@@ -87,7 +87,7 @@ export function BackToTop() {
           r={RADIUS}
           fill="none"
           strokeWidth="2.5"
-          className="stroke-purple dark:stroke-ink"
+          className="stroke-[#4E9AF5] dark:stroke-white"
           strokeLinecap="round"
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={CIRCUMFERENCE}

@@ -95,7 +95,7 @@ export interface ProcessStep {
 export interface ProcessColumn {
   index: 1 | 2;
   head: string;
-  tone: "orange" | "blue";
+  tone: "accent" | "brand";
   steps: ProcessStep[];
 }
 

@@ -23,6 +23,23 @@ type TwoToneTextProps = {
  * motion, so that path renders the finished, fully-legible state immediately
  * rather than a permanently half-faded paragraph.
  */
+/**
+ * Keeps hyphenated words such as "co-operative" on one line. Browsers treat the
+ * hyphen as a break opportunity, and at display size a line ending in "co-"
+ * reads as a typo.
+ */
+function unbreakable(text: string) {
+  return text.split(/(\S+-\S+)/).map((part, index) =>
+    index % 2 ? (
+      <span key={index} className="whitespace-nowrap">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
 const palettes = {
   page: { lead: "text-fg", trail: "text-fg-muted", from: "rgb(var(--fg-muted))", to: "rgb(var(--fg))" },
   ink: { lead: "text-ink", trail: "text-ink-muted", from: "#6B6480", to: "#140A2E" },
@@ -49,7 +66,7 @@ export function TwoToneText({
 
   return (
     <p ref={ref} className={`text-display ${className}`}>
-      <span className={palette.lead}>{lead}</span>
+      <span className={palette.lead}>{unbreakable(lead)}</span>
       {trailWords.map((word, index) => {
         const amount = scrollFill ? Math.min(1, Math.max(0, filled - index)) : 0;
         return (
@@ -66,7 +83,7 @@ export function TwoToneText({
                 : undefined
             }
           >
-            {word}
+            {unbreakable(word)}
             {index < trailWords.length - 1 ? " " : ""}
           </span>
         );

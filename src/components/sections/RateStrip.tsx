@@ -5,11 +5,12 @@ import { RateCard } from "../ui/RateCard";
 import { rates, ratesDisclaimer } from "../../data/rates";
 
 /**
- * Published lending rates, directly under the hero.
+ * Published lending rates, directly under the bank statement that follows the
+ * hero.
  *
- * A visitor arriving from a rate comparison wants the number before the
- * narrative, so the three headline rates come before anything about the bank's
- * history.
+ * A visitor arriving from a rate comparison wants the number early, so the three
+ * headline rates come before the firsts, the products and everything else about
+ * the bank. The client asked for the one-paragraph statement to lead them.
  */
 export function RateStrip() {
   return (

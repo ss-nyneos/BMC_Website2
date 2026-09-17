@@ -7,20 +7,24 @@ import type { ProcessColumn, ProcessStep } from "../../types";
  * Numbers are used here because the content is genuinely ordered: you cannot
  * collect a card before the account exists. Marked up as nested ordered lists
  * so that order is announced, not just drawn.
+ *
+ * It sits among the homepage sections carried over from bmc_website2, so it is
+ * drawn in their tokens: the brighter accent blue for the first stage, the deep
+ * brand blue for the second.
  */
 const heads = {
-  orange: "bg-orange text-ink",
-  blue: "bg-purple text-ink",
+  accent: "bg-bmc-tint text-bmc-brand",
+  brand: "bg-bmc-brand text-white",
 };
 
 const dots = {
-  orange: "bg-orange",
-  blue: "bg-purple",
+  accent: "bg-bmc-accent",
+  brand: "bg-bmc-brand",
 };
 
 const rails = {
-  orange: "from-orange/70 to-orange/5",
-  blue: "from-purple to-purple/10",
+  accent: "from-bmc-accent/70 to-bmc-accent/5",
+  brand: "from-bmc-brand to-bmc-brand/10",
 };
 
 function TimelineStep({
@@ -30,7 +34,7 @@ function TimelineStep({
   isLast,
 }: {
   step: ProcessStep;
-  tone: "orange" | "blue";
+  tone: ProcessColumn["tone"];
   index: number;
   isLast: boolean;
 }) {
@@ -43,29 +47,29 @@ function TimelineStep({
       <span
         aria-hidden="true"
         style={order}
-        className={`timeline-dot absolute left-[5px] top-2 h-3.5 w-3.5 rounded-pill ${dots[tone]}`}
+        className={`timeline-dot absolute left-[5px] top-[11px] h-3.5 w-3.5 rounded-full ${dots[tone]}`}
       />
       {!isLast ? (
         <span
           aria-hidden="true"
           style={order}
-          className={`timeline-rail absolute bottom-2 left-[11px] top-7 w-0.5 rounded-pill bg-gradient-to-b ${rails[tone]}`}
+          className={`timeline-rail absolute bottom-2 left-[11px] top-[34px] w-0.5 rounded-full bg-gradient-to-b ${rails[tone]}`}
         />
       ) : null}
 
-      <h4 className="text-h3">{step.title}</h4>
+      <h4 className="text-bmc-body font-medium text-bmc-ink">{step.title}</h4>
 
       {step.date || step.duration ? (
-        <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-meta text-fg-muted">
+        <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-bmc-data text-bmc-ink-muted">
           {step.date ? <span>{step.date}</span> : null}
           {step.date && step.duration ? (
-            <span aria-hidden="true" className="h-1 w-1 rounded-pill bg-current" />
+            <span aria-hidden="true" className="h-1 w-1 rounded-full bg-current" />
           ) : null}
           {step.duration ? <span>{step.duration}</span> : null}
         </p>
       ) : null}
 
-      <p className="mt-4 max-w-prose text-body-sm text-fg-muted">{step.description}</p>
+      <p className="mt-3 max-w-prose text-bmc-body-sm text-bmc-ink-muted">{step.description}</p>
     </li>
   );
 }
@@ -78,11 +82,11 @@ export function Timeline({ columns }: { columns: ProcessColumn[] }) {
           <div className="flex items-center gap-4">
             <span
               aria-hidden="true"
-              className={`grid h-11 w-11 shrink-0 place-items-center rounded-pill text-label font-bold ${heads[column.tone]}`}
+              className={`grid h-11 w-11 shrink-0 place-items-center rounded-full text-bmc-body-sm font-bold ${heads[column.tone]}`}
             >
               {column.index}
             </span>
-            <h3 className="text-h3">{column.head}</h3>
+            <h3 className="text-bmc-h3 font-medium text-bmc-ink">{column.head}</h3>
           </div>
 
           <ol className="mt-9">

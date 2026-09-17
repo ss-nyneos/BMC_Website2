@@ -42,6 +42,10 @@ export default {
         mint: { DEFAULT: "#8CE6A6", deep: "#57C97F" },
         sage: "#DFF6E4",
         forest: "#18405D",
+        // The deep blue of the sections carried over from bmc_website2, as a fixed
+        // colour for surfaces outside them that must match: the footer and the
+        // hero's brand block. Takes white text; it does not invert in dark mode.
+        navy: { DEFAULT: "#0B4DA2", mid: "#0A3D7C", deep: "#062B5B" },
         orange: { DEFAULT: "#EF5F2A", deep: "#D44E1E" },
         cream: { DEFAULT: "#F3EEE8", input: "#F7F3EE" },
         ink: { DEFAULT: "#140A2E", muted: "#6B6480" },
@@ -50,6 +54,31 @@ export default {
         surface: rgb("--surface"),
         field: rgb("--field"),
         fg: { DEFAULT: rgb("--fg"), muted: rgb("--fg-muted") },
+
+        // The homepage sections carried over from bmc_website2 keep that
+        // design's own palette: a deep navy brand, grey surfaces and a near-black
+        // ink. Namespaced so none of it collides with the tokens above; values
+        // live in globals.css and invert under `.dark`.
+        bmc: {
+          brand: rgb("--bmc-brand"),
+          "brand-mid": rgb("--bmc-brand-mid"),
+          "brand-deep": rgb("--bmc-brand-deep"),
+          accent: rgb("--bmc-accent"),
+          "accent-soft": rgb("--bmc-accent-soft"),
+          page: rgb("--bmc-page"),
+          card: rgb("--bmc-card"),
+          surface: rgb("--bmc-surface"),
+          "surface-alt": rgb("--bmc-surface-alt"),
+          tint: rgb("--bmc-tint"),
+          ink: rgb("--bmc-ink"),
+          "ink-muted": rgb("--bmc-ink-muted"),
+          "ink-subtle": rgb("--bmc-ink-subtle"),
+          "ink-disabled": rgb("--bmc-ink-disabled"),
+          line: rgb("--bmc-line"),
+          "line-strong": rgb("--bmc-line-strong"),
+          "on-brand-muted": rgb("--bmc-on-brand-muted"),
+          danger: rgb("--bmc-danger"),
+        },
       },
       fontFamily: {
         sans: ['"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],
@@ -71,8 +100,30 @@ export default {
         // homepage hero headline only. Capped at 96px so the page is loud once,
         // not shouting; the floor keeps "BHAROSA WOHI." on one line at 360px.
         hero: ["clamp(2rem, 6.6vw, 6rem)", { lineHeight: "0.92", letterSpacing: "-0.02em", fontWeight: "700" }],
+        // bmc_website2's scale: fixed steps rather than clamps, body at 24px,
+        // headings at weight 500. Display and h2 step down below 768px through
+        // the variables in globals.css.
+        "bmc-display": [
+          "var(--bmc-display)",
+          { lineHeight: "var(--bmc-display-lh)", letterSpacing: "-0.02em", fontWeight: "500" },
+        ],
+        "bmc-h2": ["var(--bmc-h2)", { lineHeight: "var(--bmc-h2-lh)", letterSpacing: "-0.01em", fontWeight: "500" }],
+        "bmc-h3": ["1.75rem", { lineHeight: "2.375rem", fontWeight: "500" }],
+        "bmc-body": ["1.5rem", { lineHeight: "var(--bmc-body-lh)" }],
+        "bmc-body-sm": ["1.25rem", { lineHeight: "1.875rem" }],
+        "bmc-data": ["1rem", { lineHeight: "1.5rem", letterSpacing: "0.01em" }],
+        "bmc-caption": ["0.75rem", { lineHeight: "1.125rem", letterSpacing: "0.02em" }],
       },
-      borderRadius: { pill: "9999px", "2xl": "32px", xl: "24px", lg: "16px" },
+      borderRadius: {
+        pill: "9999px",
+        "2xl": "32px",
+        xl: "24px",
+        lg: "16px",
+        "bmc-lg": "0.5rem",
+        "bmc-xl": "0.75rem",
+        "bmc-2xl": "1rem",
+        "bmc-3xl": "1.5rem",
+      },
       // Depth is layered, never a single wide blur and never paired with a
       // border. Values live in globals.css so they can change per theme.
       //  card        white surface cards at rest
@@ -111,6 +162,7 @@ export default {
       transitionTimingFunction: {
         "out-quint": "cubic-bezier(0.22, 1, 0.36, 1)",
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
+        standard: "cubic-bezier(0.4, 0, 0.2, 1)",
       },
       keyframes: {
         "rise-in": {

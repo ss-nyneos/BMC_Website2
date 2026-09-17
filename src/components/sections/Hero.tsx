@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Logo } from "../../assets/logo";
-import { fluidSrcSet, photoId, photos, srcSet, unsplash } from "../../data/photos";
+import { heroPhoto } from "../../data/photos";
 import { utilityLinks } from "../../data/nav";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { MenuTrigger } from "../nav/SiteMenu";
@@ -10,10 +10,9 @@ import { PillButton } from "../ui/PillButton";
 /**
  * Full-bleed photographic hero, composed on the client's reference: the brand
  * block cut into the top-left corner, the utility actions and the menu trigger
- * top-right, the brand line set large and right-aligned over the photograph,
+ * top-right, the brand line set large and ranged left over the photograph,
  * and a pale-blue panel with an angled corner carrying the standfirst and the
- * two actions for new customers. A small framed card bottom-right leads to the
- * bank's story.
+ * two actions for new customers.
  *
  * On the homepage this replaces the shell's logo bar, so the logo link lives
  * here with the same accessible name.
@@ -26,9 +25,8 @@ import { PillButton } from "../ui/PillButton";
  *     `backwards`-fill keyframe, so reduced motion collapses it to the finished
  *     state and nothing is ever gated on a class being added.
  *  2. Parallax. `--hero-p` runs 0 -> 1 as the hero scrolls away. The photograph
- *     drifts down, slower than the page; the headline lifts faster and fades;
- *     the story card lifts at its own rate. The panel stays anchored so the
- *     hero's bottom edge never opens a gap.
+ *     drifts down, slower than the page; the headline lifts faster and fades.
+ *     The panel stays anchored so the hero's bottom edge never opens a gap.
  */
 function useHeroProgress() {
   const ref = useRef<HTMLElement>(null);
@@ -71,8 +69,6 @@ const delay = (ms: number) => ({ animationDelay: `${ms}ms` });
 
 export function Hero() {
   const ref = useHeroProgress();
-  const city = photos.heroCity;
-
   return (
     <section
       ref={ref}
@@ -80,29 +76,21 @@ export function Hero() {
       className="on-dark relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-[#2b2d31] text-white lg:min-h-[max(100svh,760px)]"
     >
       {/* Photograph. Taller than the hero so the parallax drift never exposes an
-          edge; see the arithmetic in DESIGN.md. */}
-      <div className="hero-photo pointer-events-none absolute inset-x-0 -top-[3%] -z-10 h-[116%]">
-        {/* On a phone the panel covers the lower half of the hero, so the phone
-            crop is cut from the bottom of the photograph: less sky, and the
-            building rises into the half that stays visible. */}
-        <picture>
-          <source
-            media="(max-width: 767px)"
-            srcSet={fluidSrcSet(photoId.heroCity, 1.1, [900, 1400, 2000], "bottom")}
-            sizes="100vw"
-          />
-          <img
-            src={unsplash(photoId.heroCity, 1920, 1280)}
-            srcSet={fluidSrcSet(photoId.heroCity, 1.5)}
-            sizes="100vw"
-            alt={city.alt}
-            width={city.width}
-            height={city.height}
-            {...{ fetchpriority: "high" }}
-            decoding="async"
-            className="h-full w-full object-cover object-[40%_50%] md:object-[50%_58%]"
-          />
-        </picture>
+          edge; see the arithmetic in DESIGN.md. On a portrait screen the cover
+          crop keeps a slice about a third of the frame wide, so `sizes` asks
+          for more than the viewport width there. */}
+      <div className="hero-photo pointer-events-none absolute -top-[3%] left-0 -z-10 h-[116%] w-full lg:w-[116%] min-[1440px]:w-full">
+        <img
+          src={heroPhoto.src}
+          srcSet={heroPhoto.srcSet}
+          sizes="(orientation: portrait) 250vw, 100vw"
+          alt={heroPhoto.alt}
+          width={heroPhoto.width}
+          height={heroPhoto.height}
+          {...{ fetchpriority: "high" }}
+          decoding="async"
+          className="h-full w-full object-cover object-[62%_30%] md:object-[50%_30%] lg:object-[20%_30%] min-[1440px]:object-[50%_30%]"
+        />
       </div>
 
       {/* Scrims, kept light so the photograph stays sunny: a neutral shade at the
@@ -114,40 +102,45 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(14_14_18/0.42)_0%,rgb(14_14_18/0.06)_24%,rgb(14_14_18/0.06)_58%,rgb(14_14_18/0.66)_100%)]"
       />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(14_14_18/0.5)_0%,rgb(14_14_18/0.32)_32%,transparent_58%)]"
+      />
       <div aria-hidden="true" className="hero-dim pointer-events-none absolute inset-0 -z-10 bg-[#0e0e12]" />
 
       {/* Top row */}
-      <div className="relative flex items-start justify-between gap-4">
-        <div className="hero-brand on-light relative">
+      <div className="relative flex items-center justify-between gap-4">
+        <div className="hero-brand relative">
           {/* The angled cut lives on this layer, not on the link, so it never
-              clips the link's focus outline. Brand blue, so the text is ink:
-              white does not clear 4.5:1 on #3FA9F6. */}
-          <span aria-hidden="true" className="hero-brand-cut absolute inset-0 bg-purple" />
+              clips the link's focus outline. The same deep blue as the sections
+              further down the page, so the text is white and the focus ring
+              stays the hero's white one. */}
+          <span aria-hidden="true" className="hero-brand-cut absolute inset-0 bg-navy" />
           <a
             href="/"
             aria-label="Bombay Mercantile Co-operative Bank, home"
-            className="group relative flex items-center gap-4 focus-visible:outline-offset-[-8px] py-4 pl-5 pr-14 sm:gap-5 sm:py-6 sm:pl-10 sm:pr-20 lg:py-8 lg:pl-12 lg:pr-24"
+            className="group relative flex items-center gap-3 py-3 pl-4 pr-9 focus-visible:outline-offset-[-6px] sm:gap-4 sm:pl-6 sm:pr-11 lg:py-4 lg:pl-8 lg:pr-12"
           >
             <Logo
-              height={64}
+              height={56}
               className="transition-transform duration-500 ease-out-expo group-hover:-rotate-2 group-hover:scale-[1.04] lg:hidden"
             />
             <Logo
-              height={76}
+              height={64}
               className="hidden transition-transform duration-500 ease-out-expo group-hover:-rotate-2 group-hover:scale-[1.04] lg:inline-flex"
             />
             <span
               aria-hidden="true"
-              className="hidden border-l border-ink/25 pl-5 text-fine font-bold uppercase leading-snug tracking-[0.18em] text-ink sm:block"
+              className="hidden border-l border-white/30 pl-4 text-fine font-bold uppercase leading-snug tracking-[0.18em] text-white sm:block"
             >
               Bombay Mercantile
-              <span className="block font-medium text-ink/80">Co-operative Bank</span>
+              <span className="block font-medium text-white/80">Co-operative Bank</span>
             </span>
           </a>
         </div>
 
         <div
-          className="hero-fade flex items-center gap-3 pr-5 pt-7 sm:pr-10 sm:pt-8 lg:pr-12 lg:pt-10"
+          className="hero-fade flex items-center gap-3 pr-5 sm:pr-10 lg:pr-12"
           style={delay(650)}
         >
           <PillButton
@@ -174,8 +167,8 @@ export function Hero() {
       </div>
 
       {/* Headline */}
-      <div className="relative flex flex-1 items-end px-5 pb-9 pt-16 sm:px-10 lg:justify-end lg:px-12 lg:pb-12">
-        <div className="hero-copy relative lg:text-right">
+      <div className="relative flex flex-1 items-end px-5 pb-9 pt-16 sm:px-10 lg:px-12 lg:pb-12">
+        <div className="hero-copy relative">
           {/* A pool of shade that travels with the headline, so the type holds
               its contrast over bright sky at every breakpoint without darkening
               the whole photograph. */}
@@ -195,7 +188,7 @@ export function Hero() {
       </div>
 
       {/* Bottom row */}
-      <div className="relative grid items-end lg:grid-cols-[minmax(0,37rem)_1fr] xl:grid-cols-[minmax(0,38rem)_1fr_auto]">
+      <div className="relative grid items-end lg:grid-cols-[minmax(0,37rem)_1fr] xl:grid-cols-[minmax(0,38rem)_1fr]">
         <div className="hero-panel on-light bg-lavender px-5 pb-10 pt-14 text-ink sm:px-10 sm:pb-12 lg:px-12 lg:pb-14 lg:pt-16">
           <p className="hero-fade max-w-[24ch] text-h2" style={delay(820)}>
             Savings, deposits and loans from India&rsquo;s first scheduled urban{" "}
@@ -230,30 +223,6 @@ export function Hero() {
             <CircleArrow tone="white" size="sm" direction="down" />
           </span>
         </a>
-
-        <div className="hero-story-wrap on-light hidden justify-self-end p-12 xl:block">
-          <a
-            href="#our-story"
-            className="hero-fade group block w-80 bg-purple p-2 shadow-card-hover transition-transform duration-500 ease-out-expo hover:-translate-y-1.5"
-            style={delay(1150)}
-          >
-            <span className="block overflow-hidden">
-              <img
-                src={photos.story.src}
-                srcSet={srcSet(photoId.story, photos.story.width, photos.story.height)}
-                alt=""
-                width={photos.story.width}
-                height={photos.story.height}
-                decoding="async"
-                className="aspect-[16/10] h-auto w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.08]"
-              />
-            </span>
-            <span className="flex items-center justify-between gap-4 px-2 pb-1.5 pt-3 text-fine font-bold uppercase tracking-[0.18em] text-ink">
-              Our story since 1939
-              <CircleArrow tone="ink" size="sm" direction="down" />
-            </span>
-          </a>
-        </div>
       </div>
     </section>
   );

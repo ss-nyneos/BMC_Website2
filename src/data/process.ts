@@ -11,7 +11,7 @@ export const processColumns: ProcessColumn[] = [
   {
     index: 1,
     head: "Apply and verify",
-    tone: "orange",
+    tone: "accent",
     steps: [
       {
         title: "Fill in the form",
@@ -39,7 +39,7 @@ export const processColumns: ProcessColumn[] = [
   {
     index: 2,
     head: "Activate and bank",
-    tone: "blue",
+    tone: "brand",
     steps: [
       {
         title: "Account activated",

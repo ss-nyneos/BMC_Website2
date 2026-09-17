@@ -245,3 +245,292 @@ export function BellIcon(props: IconProps) {
     </svg>
   );
 }
+
+/* --- Inner pages ------------------------------------------------------------
+   Marks for the product, facility and contact cards on the inner pages. Same
+   24x24 grid and 2px stroke as the rest of the family, so a card's icon chip
+   never looks borrowed from another set. */
+
+export function CalendarIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="4" y="5.5" width="16" height="14.5" rx="2.5" />
+      <path d="M4 10h16" />
+      <path d="M8.5 3.5v4M15.5 3.5v4" />
+      <path d="M8 14h2M12 14h2M8 17h2" />
+    </svg>
+  );
+}
+
+export function WalletIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M18 8V6.5A1.5 1.5 0 0 0 16.5 5H6a2 2 0 0 0 0 4h12.5A1.5 1.5 0 0 1 20 10.5v7a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2V7" />
+      <path d="M16 14h.01" />
+    </svg>
+  );
+}
+
+export function PercentIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M18.5 5.5 5.5 18.5" />
+      <circle cx="7" cy="7" r="2.25" />
+      <circle cx="17" cy="17" r="2.25" />
+    </svg>
+  );
+}
+
+export function UsersIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="9" cy="8.5" r="3.25" />
+      <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
+      <path d="M15.5 5.6a3.25 3.25 0 0 1 0 5.8" />
+      <path d="M17.5 14.2a5.5 5.5 0 0 1 3 4.8" />
+    </svg>
+  );
+}
+
+export function GraduationIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="m12 5 9.5 4.5L12 14 2.5 9.5Z" />
+      <path d="M6.5 11.5v4c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-4" />
+      <path d="M21.5 9.5v5" />
+    </svg>
+  );
+}
+
+export function SofaIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M5.5 11V8a2.5 2.5 0 0 1 2.5-2.5h8A2.5 2.5 0 0 1 18.5 8v3" />
+      <path d="M3.5 12.5a2 2 0 0 1 4 0V14h9v-1.5a2 2 0 0 1 4 0V17a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 17Z" />
+      <path d="M6 18.5V20M18 18.5V20" />
+    </svg>
+  );
+}
+
+export function DocumentIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8Z" />
+      <path d="M14 3.5V8h4.5" />
+      <path d="M9 12.5h6M9 16h4" />
+    </svg>
+  );
+}
+
+/** A spreadsheet: the grid is the difference from `DocumentIcon`. */
+export function SheetIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="4" y="4" width="16" height="16" rx="2.5" />
+      <path d="M4 9.5h16M4 14.75h16M10 9.5V20" />
+    </svg>
+  );
+}
+
+export function SearchIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m16 16 4 4" />
+    </svg>
+  );
+}
+
+export function CopyIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="8.5" y="8.5" width="11.5" height="11.5" rx="2.5" />
+      <path d="M15.5 8.5V6.5A2.5 2.5 0 0 0 13 4H6.5A2.5 2.5 0 0 0 4 6.5V13a2.5 2.5 0 0 0 2.5 2.5h2" />
+    </svg>
+  );
+}
+
+export function CheckIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
+    </svg>
+  );
+}
+
+export function MapPinIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" />
+      <circle cx="12" cy="10" r="2.5" />
+    </svg>
+  );
+}
+
+export function MailIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="2.5" />
+      <path d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}
+
+export function ClockIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </svg>
+  );
+}
+
+/** A bank or public institution: pediment, columns, plinth. */
+export function BankIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M3.5 9 12 4l8.5 5Z" />
+      <path d="M6 12v5M10 12v5M14 12v5M18 12v5" />
+      <path d="M3.5 20h17" />
+    </svg>
+  );
+}
+
+export function GlobeIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M3.5 12h17" />
+      <path d="M12 3.5c2.3 2.4 3.4 5.2 3.4 8.5s-1.1 6.1-3.4 8.5c-2.3-2.4-3.4-5.2-3.4-8.5S9.7 5.9 12 3.5Z" />
+    </svg>
+  );
+}
+
+export function StoreIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4.5 4.5h15l1.5 4.5a2.75 2.75 0 0 1-5.5 0 2.75 2.75 0 0 1-5.5 0A2.75 2.75 0 0 1 4.5 9 2.5 2.5 0 0 1 3 9Z" />
+      <path d="M5 12v8h14v-8" />
+      <path d="M10 20v-4.5h4V20" />
+    </svg>
+  );
+}
+
+export function FactoryIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M3.5 20V10l5 3v-3l5 3v-3l5 3V4.5h2V20Z" />
+      <path d="M3.5 20h17" />
+      <path d="M8 16.5h1.5M12 16.5h1.5M16 16.5h1.5" />
+    </svg>
+  );
+}
+
+export function BoxIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="m12 3.5 8 4v9l-8 4-8-4v-9Z" />
+      <path d="m4 7.5 8 4 8-4" />
+      <path d="M12 11.5v9" />
+    </svg>
+  );
+}
+
+export function LayersIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="m12 4 8.5 4.5L12 13 3.5 8.5Z" />
+      <path d="m3.5 12.5 8.5 4.5 8.5-4.5" />
+      <path d="m3.5 16.5 8.5 4.5 8.5-4.5" />
+    </svg>
+  );
+}
+
+export function ReceiptIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M6 3.5h12v17l-2.5-1.5-2 1.5-1.5-1.5-1.5 1.5-2-1.5L6 20.5Z" />
+      <path d="M9 8h6M9 11.5h6M9 15h3.5" />
+    </svg>
+  );
+}
+
+export function TruckIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M3 6.5h11v10H3Z" />
+      <path d="M14 10h3.5l3 3.5v3H14" />
+      <circle cx="7" cy="17.5" r="1.75" />
+      <circle cx="17" cy="17.5" r="1.75" />
+    </svg>
+  );
+}
+
+export function BriefcaseIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3.5" y="7" width="17" height="12.5" rx="2.5" />
+      <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" />
+      <path d="M3.5 12.5h17" />
+    </svg>
+  );
+}
+
+/** A certificate with a seal, for savings certificates and bonds. */
+export function CertificateIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M13 17.5H5.5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v4" />
+      <path d="M7 8.5h8M7 12h4" />
+      <circle cx="17.5" cy="14.5" r="2.75" />
+      <path d="m16 17 -.75 3.5 2.25-1 2.25 1L19 17" />
+    </svg>
+  );
+}
+
+export function UmbrellaIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M3 12a9 9 0 0 1 18 0Z" />
+      <path d="M12 12v6a2 2 0 0 1-4 0" />
+    </svg>
+  );
+}
+
+export function HeadsetIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4.5 14v-2a7.5 7.5 0 0 1 15 0v2" />
+      <rect x="3.5" y="13" width="4" height="6" rx="1.5" />
+      <rect x="16.5" y="13" width="4" height="6" rx="1.5" />
+      <path d="M18.5 19a3 3 0 0 1-3 2.5H13" />
+    </svg>
+  );
+}
+
+/** A phone keypad, for the IVR line. */
+export function KeypadIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M7 5h.01M12 5h.01M17 5h.01M7 10h.01M12 10h.01M17 10h.01M7 15h.01M12 15h.01M17 15h.01M12 20h.01" strokeWidth={3} />
+    </svg>
+  );
+}
+
+export function HelpIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M9.6 9.4a2.5 2.5 0 0 1 4.8 1c0 1.7-2.4 2.1-2.4 3.6" />
+      <path d="M12 17h.01" />
+    </svg>
+  );
+}
+
+export function SignalIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M6 18v-3M10 18v-6M14 18V9M18 18V6" />
+    </svg>
+  );
+}

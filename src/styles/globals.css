@@ -55,6 +55,44 @@
     0 14px 24px -12px rgb(20 10 46 / 0.2);
 
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* bmc_website2 palette, for the homepage sections carried over from it.
+     Channels, like the neutrals above, so opacity modifiers work. */
+  --bmc-brand: 11 77 162;          /* #0B4DA2 */
+  --bmc-brand-mid: 10 61 124;      /* #0A3D7C */
+  --bmc-brand-deep: 6 43 91;       /* #062B5B */
+  --bmc-accent: 30 122 240;        /* #1E7AF0 */
+  --bmc-accent-soft: 78 154 245;   /* #4E9AF5 */
+  --bmc-page: 255 255 255;
+  --bmc-card: 255 255 255;
+  --bmc-surface: 241 244 247;      /* #F1F4F7 */
+  --bmc-surface-alt: 239 245 252;  /* #EFF5FC */
+  --bmc-tint: 220 234 251;         /* #DCEAFB */
+  --bmc-ink: 26 29 33;             /* #1A1D21 */
+  --bmc-ink-muted: 91 102 112;     /* #5B6670 */
+  --bmc-ink-subtle: 138 147 156;   /* #8A939C */
+  --bmc-ink-disabled: 155 165 174; /* #9BA5AE */
+  --bmc-line: 226 230 234;         /* #E2E6EA */
+  --bmc-line-strong: 201 209 217;  /* #C9D1D9 */
+  --bmc-on-brand-muted: 197 216 239; /* #C5D8EF */
+  --bmc-danger: 180 35 24;         /* #B42318, form errors */
+
+  --bmc-display: 2.375rem;
+  --bmc-display-lh: 2.875rem;
+  --bmc-h2: 2rem;
+  --bmc-h2-lh: 2.625rem;
+  --bmc-body-lh: 2.25rem;
+}
+
+/* bmc_website2's mobile step: only display and h2 get smaller; body holds. */
+@media (max-width: 767px) {
+  :root {
+    --bmc-display: 2rem;
+    --bmc-display-lh: 2.5rem;
+    --bmc-h2: 1.75rem;
+    --bmc-h2-lh: 2.25rem;
+    --bmc-body-lh: 2.125rem;
+  }
 }
 
 .dark {
@@ -92,6 +130,26 @@
   --shadow-pill-hover:
     0 0 0 1px rgb(243 238 232 / 0.16),
     0 8px 16px -6px rgb(0 0 0 / 0.55);
+
+  --bmc-page: 13 17 23;            /* #0D1117 */
+  --bmc-card: 26 32 41;            /* #1A2029 */
+  --bmc-surface: 22 27 34;         /* #161B22 */
+  --bmc-surface-alt: 18 24 31;     /* #12181F */
+  --bmc-tint: 22 38 58;            /* #16263A */
+  --bmc-ink: 230 237 243;          /* #E6EDF3 */
+  --bmc-ink-muted: 155 165 174;    /* #9BA5AE */
+  --bmc-ink-subtle: 110 118 129;   /* #6E7681 */
+  --bmc-line: 45 51 59;            /* #2D333B */
+  --bmc-line-strong: 61 68 77;     /* #3D444D */
+  --bmc-brand: 30 122 240;         /* #1E7AF0 */
+  --bmc-accent: 78 154 245;        /* #4E9AF5 */
+  --bmc-danger: 255 138 128;       /* #FF8A80 */
+}
+
+/* In dark mode #1E7AF0 as small text on a dark card sits just under 4.5:1, so
+   brand-coloured text (not fills) lifts to the lighter accent. */
+.dark .text-bmc-brand {
+  color: rgb(var(--bmc-accent));
 }
 
 @layer base {
@@ -266,16 +324,12 @@
     opacity: calc(1 - var(--hero-p, 0) * 1.25);
   }
 
-  .hero-story-wrap {
-    transform: translate3d(0, calc(var(--hero-p, 0) * -110px), 0);
-  }
-
   .hero-brand {
     animation: slide-in-left 1000ms var(--ease-expo) 80ms backwards;
   }
 
   .hero-brand-cut {
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 44px), calc(100% - 44px) 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
   }
 
   /* Each headline line rises out of its own mask. The padding and matching
@@ -361,6 +415,90 @@
       transform 900ms var(--ease-expo) calc(var(--i, 0) * 60ms + 360ms);
   }
 
+  /* -------------------------------------------------------------------------
+     Inner pages.
+
+     The fact chips beside each page header pop in after the photograph, then
+     drift on a slow float, so the header reads as alive without competing
+     with the heading. `--chip-delay` staggers the two chips.
+  ------------------------------------------------------------------------- */
+  .chip-float {
+    animation:
+      chip-pop 900ms var(--ease-expo) backwards,
+      chip-float 7s ease-in-out infinite;
+    animation-delay: var(--chip-delay, 420ms), calc(var(--chip-delay, 420ms) + 900ms);
+  }
+
+  /* The thin ring round the header photograph carries one dot, and turns
+     slowly enough to read as depth rather than a loading spinner. */
+  .orbit {
+    animation: orbit 48s linear infinite;
+  }
+
+  /* Bars in a chart grow from their baseline once the chart is revealed, in
+     row order. `--i` is the row index, set inline. At rest, and whenever the
+     reveal never arms, they are simply drawn at full length. */
+  .bar-grow {
+    transform-origin: left center;
+  }
+
+  .js-motion .reveal:not(.is-in) .bar-grow {
+    transform: scaleX(0);
+  }
+
+  .js-motion .reveal.is-in .bar-grow {
+    animation: grow-x 1100ms var(--ease-expo) backwards;
+    animation-delay: calc(var(--i, 0) * 70ms + 180ms);
+  }
+
+  .js-motion .reveal:not(.is-in) .pop-late {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  .js-motion .reveal.is-in .pop-late {
+    animation: dot-pop-fade 700ms var(--ease-expo) backwards;
+    animation-delay: calc(var(--i, 0) * 70ms + 700ms);
+  }
+
+  /* A soft light that follows the pointer across a card. The position is
+     written to `--mx` / `--my` by `useSpotlight`; with no pointer it simply
+     never shows. It sits under the card's content and never takes a click. */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(255 255 255 / 0.5),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 400ms var(--ease-expo);
+    pointer-events: none;
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+
+  /* On a white card in dark mode a white light would glare; it takes a sky
+     tint instead. */
+  .dark .spotlight-surface::before {
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(63 169 246 / 0.14),
+      transparent 60%
+    );
+  }
+
   /* A tight shade hugging the glyphs, so white type stays legible over a
      bright photograph without laying a dark haze across the whole frame. */
   .hero-halo {
@@ -369,6 +507,30 @@
       0 2px 16px rgb(14 14 18 / 0.5),
       0 4px 40px rgb(14 14 18 / 0.4);
   }
+}
+
+@keyframes chip-pop {
+  from { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.8); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes chip-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+}
+
+@keyframes orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes grow-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes dot-pop-fade {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes rise-in {
@@ -439,8 +601,7 @@
   }
 
   .hero-photo,
-  .hero-copy,
-  .hero-story-wrap {
+  .hero-copy {
     transform: none;
     opacity: 1;
   }
@@ -452,4 +613,107 @@
   .menu-fade {
     transition-delay: 0ms !important;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Homepage sections carried over from bmc_website2.
+
+   That site drove its motion with GSAP ScrollTrigger. Here the same effects run
+   natively: `useScrub` writes a few custom properties from the scroll position,
+   and the rules below turn them into clip-paths, opacities and transforms.
+   Every property has a resting default, so without JS, or under reduced
+   motion (where the hook writes nothing), each block renders finished.
+--------------------------------------------------------------------------- */
+@layer components {
+  /* bmc_website2's focus ring: accent on light grounds, white on the navy
+     ones, accent again on a light panel set inside a navy card. */
+  .bmc-sections :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid rgb(var(--bmc-accent));
+    outline-offset: 2px;
+  }
+
+  .bmc-sections [data-ground="dark"] :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-color: #ffffff;
+  }
+
+  .bmc-sections [data-ground="dark"] [data-ground="light"] :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-color: rgb(var(--bmc-accent));
+  }
+
+  /* The fading rule between the question links. */
+  .bmc-rule-fade {
+    height: 1px;
+    background: linear-gradient(90deg, #dadada 0%, rgb(241 244 247 / 0.21) 90.02%);
+  }
+
+  .dark .bmc-rule-fade {
+    background: linear-gradient(90deg, #3d444d 0%, rgb(22 27 34 / 0.21) 90.02%);
+  }
+
+  .bmc-rule-fade-on-brand {
+    height: 1px;
+    background: linear-gradient(90deg, rgb(255 255 255 / 0.45) 0%, rgb(255 255 255 / 0) 90%);
+  }
+
+  /* The navy card ground. Fixed colours: it does not invert in dark mode. */
+  .bg-bmc-card-dark {
+    background-color: #0b4da2;
+    background-image: linear-gradient(115deg, #0b4da2 24.94%, #062b5b 111.77%);
+  }
+
+  @media (min-width: 768px) {
+    .bg-bmc-card-dark {
+      background-image: linear-gradient(230deg, #062b5b 0%, #0b4da2 91.82%);
+    }
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* A section card opens from a slightly inset, rounder frame as it enters.
+     `--open` runs 0 -> 1; a clip-path, so the text inside never blurs. */
+  .bmc-card-open {
+    clip-path: inset(
+      calc((1 - var(--open, 1)) * 3%) calc((1 - var(--open, 1)) * 2.5%)
+      round calc(16px + (1 - var(--open, 1)) * 16px)
+    );
+  }
+
+  /* Each "first" brightens word by word. `--p` is the list's progress, `--n`
+     its word count and `--i` the word's index, all set inline. */
+  .bmc-word {
+    opacity: calc(0.28 + 0.72 * clamp(0, var(--p, 1) * var(--n, 1) - var(--i, 0), 1));
+  }
+
+  .bmc-phone {
+    transform: translate3d(0, var(--phone-y, 0px), 0) rotate(var(--phone-r, 0deg));
+    will-change: transform;
+  }
+
+  .bmc-halo {
+    transform: translate3d(-50%, -50%, 0) scale(var(--halo-s, 1));
+    opacity: var(--halo-o, 1);
+  }
+
+  /* Sideways entrance for the digital-banking chips. `--reveal-x` is the
+     starting offset: negative from the left, positive from the right. */
+  .js-motion .reveal-x:not(.is-in) {
+    opacity: 0;
+    transform: translate3d(var(--reveal-x, -40px), 0, 0);
+  }
+
+  .js-motion .reveal-x.is-in {
+    animation: slide-x-in 1000ms var(--ease-expo) backwards;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+}
+
+@keyframes slide-x-in {
+  from { opacity: 0; transform: translate3d(var(--reveal-x, -40px), 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }

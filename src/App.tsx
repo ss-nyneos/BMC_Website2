@@ -8,6 +8,7 @@ import { NoticeModal } from "./components/ui/NoticeModal";
 import { BackToTop } from "./components/ui/BackToTop";
 import { useParallax } from "./hooks/useParallax";
 import { useReveal } from "./hooks/useReveal";
+import { useSpotlight } from "./hooks/useSpotlight";
 import { useLinkInterception, useRoute, useRouteChangeEffects } from "./router";
 import { HomePage } from "./pages/HomePage";
 import { ContactPage } from "./pages/ContactPage";
@@ -67,6 +68,7 @@ export default function App() {
 
   useReveal(path);
   useParallax(path);
+  useSpotlight();
   useLinkInterception();
   useRouteChangeEffects(path);
 

@@ -12,7 +12,16 @@ export type TabItem = {
  *
  * The tabs themselves are pills, matching the shape language of the page.
  */
-export function Tabs({ items, className = "" }: { items: TabItem[]; className?: string }) {
+export function Tabs({
+  items,
+  className = "",
+  label = "News and notices",
+}: {
+  items: TabItem[];
+  className?: string;
+  /** Accessible name for the tab list. */
+  label?: string;
+}) {
   const [selected, setSelected] = useState(0);
   const baseId = useId();
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -50,7 +59,7 @@ export function Tabs({ items, className = "" }: { items: TabItem[]; className?: 
     <div className={className}>
       <div
         role="tablist"
-        aria-label="News and notices"
+        aria-label={label}
         onKeyDown={onKeyDown}
         className="flex flex-wrap gap-2.5"
       >

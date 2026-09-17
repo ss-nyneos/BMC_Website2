@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const REVEAL_SELECTOR = ".reveal, .reveal-pop, .reveal-clip, .reveal-stagger";
+const REVEAL_SELECTOR = ".reveal, .reveal-pop, .reveal-clip, .reveal-stagger, .reveal-x";
 
 /**
  * Plays each block's entrance animation once, via IntersectionObserver rather

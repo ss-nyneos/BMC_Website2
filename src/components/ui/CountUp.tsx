@@ -31,7 +31,18 @@ export function CountUp({ value, className = "" }: CountUpProps) {
     const [, prefix, digits, suffix] = match;
     const target = Number(digits.replace(/,/g, ""));
     const decimals = digits.split(".")[1]?.length ?? 0;
-    const format = (n: number) => `${prefix}${n.toFixed(decimals)}${suffix}`;
+    // A figure published with Indian digit grouping ("2,25,481") keeps that
+    // grouping while it counts, so the width does not jump when it lands.
+    const grouped = digits.includes(",");
+    const format = (n: number) =>
+      `${prefix}${
+        grouped
+          ? n.toLocaleString("en-IN", {
+              minimumFractionDigits: decimals,
+              maximumFractionDigits: decimals,
+            })
+          : n.toFixed(decimals)
+      }${suffix}`;
 
     let raf = 0;
     const observer = new IntersectionObserver(
