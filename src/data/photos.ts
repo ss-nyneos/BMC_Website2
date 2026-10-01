@@ -21,19 +21,6 @@ export function srcSet(id: string, width: number, height: number) {
   return `${unsplash(id, width, height)} 1x, ${unsplash(id, width * 2, height * 2, 70)} 2x`;
 }
 
-/**
- * Full-bleed hero backdrop, the housing loan photograph. Served from `public/`
- * rather than Unsplash, resized from the 1536x1024 original, which is also the
- * widest file there is.
- */
-export const heroPhoto = {
-  src: "/hero/home-loan-1536.jpg",
-  srcSet: "/hero/home-loan-800.webp 800w, /hero/home-loan-1200.webp 1200w, /hero/home-loan-1536.webp 1536w",
-  alt: "A loan officer going through a home loan application with a couple at a desk, a model house on the table between them.",
-  width: 1536,
-  height: 1024,
-};
-
 type PhotoSpec = { id: string; alt: string; width: number; height: number };
 
 const spec = {
@@ -73,23 +60,21 @@ const spec = {
     width: 720,
     height: 720,
   },
-  // The "Find your way in" trio: each chosen to show the card's own subject
-  // rather than a generic portrait or landmark.
-  pillarPersonal: {
-    id: "photo-1657912230234-87f45165424d",
-    alt: "A smiling man and woman outdoors under trees, with a baby in blue overalls between them.",
+  personal: {
+    id: "photo-1607746882042-944635dfe10e",
+    alt: "A woman in a checked shirt smiling in a bright room.",
     width: 520,
     height: 520,
   },
-  pillarBusiness: {
-    id: "photo-1780504863007-44f229d4d33f",
-    alt: "A tailor in his workshop, stitching pink fabric on an old black sewing machine.",
+  business: {
+    id: "photo-1441986300917-64674bd600d8",
+    alt: "The inside of a small independent shop, goods arranged on open shelving.",
     width: 520,
     height: 520,
   },
-  pillarOverseas: {
-    id: "photo-1657358846130-3305fd8fcd30",
-    alt: "A hand holding a passport and boarding pass in an airport terminal, a traveller wheeling a suitcase behind.",
+  overseas: {
+    id: "photo-1595658658481-d53d3f999875",
+    alt: "The Gateway of India seen across the harbour on a clear day.",
     width: 520,
     height: 520,
   },
@@ -110,76 +95,6 @@ const spec = {
     alt: "A man in a dark suit and glasses photographed against a plain wall.",
     width: 160,
     height: 160,
-  },
-
-  // Inner pages. Each photograph shows the page's own subject, an object or a
-  // place, and never a person: a stranger's portrait above a rate table read
-  // as a stock photo, and suggested a customer the bank does not have.
-  rupeeCoins: {
-    id: "photo-1565373679107-344d38dbf734",
-    alt: "Indian rupee coins spread across a fan of folded banknotes.",
-    width: 520,
-    height: 520,
-  },
-  calculator: {
-    id: "photo-1642043175009-5997b3a078d8",
-    alt: "A desk calculator and a pencil lying on sheets of graph paper.",
-    width: 520,
-    height: 520,
-  },
-  modelHouse: {
-    id: "photo-1709080381729-965c62ab0471",
-    alt: "A small white model house standing beside two stacks of coins.",
-    width: 520,
-    height: 520,
-  },
-  goldBangles: {
-    id: "photo-1758995116383-f51775896add",
-    alt: "A stack of patterned gold bangles on a dark surface.",
-    width: 520,
-    height: 520,
-  },
-  carKey: {
-    id: "photo-1710006548781-eff5670376fa",
-    alt: "A car key and its remote fob on a plain white surface.",
-    width: 520,
-    height: 520,
-  },
-  bangleShop: {
-    id: "photo-1760786933027-fe2ad82957f9",
-    alt: "Shop shelves stacked floor to ceiling with red, green and gold bangles.",
-    width: 520,
-    height: 520,
-  },
-  rotaryPhone: {
-    id: "photo-1525598912003-663126343e1f",
-    alt: "A black rotary telephone with its handset lifted off the cradle.",
-    width: 520,
-    height: 520,
-  },
-  oldLedger: {
-    id: "photo-1760307837453-ce60cb209e52",
-    alt: "An old ledger lying open, its pages worn soft and filled with handwriting.",
-    width: 520,
-    height: 520,
-  },
-  rubberStamp: {
-    id: "photo-1619418602850-35ad20aa1700",
-    alt: "A wooden rubber stamp resting on a printed official document.",
-    width: 520,
-    height: 520,
-  },
-  questionMark: {
-    id: "photo-1595452767427-0905ad9b036d",
-    alt: "A large question mark painted in white on a weathered brick wall.",
-    width: 520,
-    height: 520,
-  },
-  meetingHall: {
-    id: "photo-1643199021361-c2fd68cd5571",
-    alt: "Rows of empty blue and grey chairs set out in a meeting hall.",
-    width: 520,
-    height: 520,
   },
 } satisfies Record<string, PhotoSpec>;
 

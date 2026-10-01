@@ -8,7 +8,7 @@ import { BulletList } from "./BulletList";
  */
 function NumberedStage({ stage }: { stage: Stage }) {
   return (
-    <li className="rounded-2xl bg-surface p-7 shadow-card sm:p-9">
+    <li className="rounded-2xl border border-line bg-surface p-7 sm:p-9">
       <div className="flex items-center gap-4">
         <span
           aria-hidden="true"
@@ -30,7 +30,7 @@ function NumberedStage({ stage }: { stage: Stage }) {
 
 export function StageList({ stages, className = "" }: { stages: Stage[]; className?: string }) {
   return (
-    <ol className={`reveal-stagger flex flex-col gap-4 sm:gap-5 ${className}`}>
+    <ol className={`flex flex-col gap-4 sm:gap-5 ${className}`}>
       {stages.map((stage) => (
         <NumberedStage key={stage.index} stage={stage} />
       ))}

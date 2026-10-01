@@ -68,7 +68,7 @@ export function Modal({ open, onClose, title, children, footer, labelledById }: 
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-pill border border-line-strong transition-[background-color,color,transform] duration-300 ease-out-expo hover:rotate-90 hover:bg-lavender-soft hover:text-ink"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-pill border border-line transition-colors duration-200 hover:bg-lavender-soft hover:text-ink"
           >
             <CloseIcon className="h-5 w-5" />
           </button>

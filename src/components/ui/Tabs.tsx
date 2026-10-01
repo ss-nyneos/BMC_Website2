@@ -12,16 +12,7 @@ export type TabItem = {
  *
  * The tabs themselves are pills, matching the shape language of the page.
  */
-export function Tabs({
-  items,
-  className = "",
-  label = "News and notices",
-}: {
-  items: TabItem[];
-  className?: string;
-  /** Accessible name for the tab list. */
-  label?: string;
-}) {
+export function Tabs({ items, className = "" }: { items: TabItem[]; className?: string }) {
   const [selected, setSelected] = useState(0);
   const baseId = useId();
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -59,7 +50,7 @@ export function Tabs({
     <div className={className}>
       <div
         role="tablist"
-        aria-label={label}
+        aria-label="News and notices"
         onKeyDown={onKeyDown}
         className="flex flex-wrap gap-2.5"
       >
@@ -78,10 +69,10 @@ export function Tabs({
               aria-controls={`${baseId}-panel-${index}`}
               tabIndex={isSelected ? 0 : -1}
               onClick={() => setSelected(index)}
-              className={`h-12 rounded-pill px-6 text-label font-medium transition-[background-color,color,border-color,box-shadow,transform] duration-300 ease-out-expo active:scale-[0.97] ${
+              className={`h-12 rounded-pill px-6 text-label font-medium transition-colors duration-200 ease-out-quint ${
                 isSelected
-                  ? "bg-purple text-ink shadow-pill"
-                  : "border border-line-strong text-fg hover:-translate-y-0.5 hover:border-transparent hover:bg-lavender-soft hover:text-ink"
+                  ? "bg-purple text-ink"
+                  : "border border-line text-fg hover:bg-lavender-soft hover:text-ink"
               }`}
             >
               {item.label}
@@ -98,19 +89,9 @@ export function Tabs({
           aria-labelledby={`${baseId}-tab-${index}`}
           hidden={index !== selected}
           tabIndex={0}
-          className="mt-9 rounded-xl"
+          className="mt-9 focus-visible:outline-none"
         >
-          {/* Keyed on selection so the incoming panel plays its entrance each
-              time; a CSS keyframe rather than a scroll reveal, because a
-              reveal inside a panel that mounts later is exactly the kind of
-              block an observer can miss. */}
-          {index === selected ? (
-            <div key={`shown-${selected}`} className="animate-rise-in">
-              {item.panel}
-            </div>
-          ) : (
-            item.panel
-          )}
+          {item.panel}
         </div>
       ))}
     </div>

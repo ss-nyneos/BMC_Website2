@@ -14,14 +14,9 @@ export function DarkModeToggle({ className = "" }: { className?: string }) {
       role="switch"
       aria-checked={isDark}
       onClick={toggle}
-      className={`grid h-12 w-12 place-items-center rounded-pill text-fg transition-[background-color,color,transform] duration-300 ease-out-expo hover:bg-lavender-soft hover:text-ink active:scale-95 ${className}`}
+      className={`grid h-11 w-11 place-items-center rounded-pill border border-line transition-colors duration-200 ease-out-quint hover:bg-lavender-soft hover:text-ink ${className}`}
     >
-      {/* Keyed so the new icon spins in each time the theme flips. */}
-      {isDark ? (
-        <MoonIcon key="moon" className="h-5 w-5 animate-pop-spin" />
-      ) : (
-        <SunIcon key="sun" className="h-5 w-5 animate-pop-spin" />
-      )}
+      {isDark ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5" />}
       <span className="sr-only">{isDark ? "Switch to light theme" : "Switch to dark theme"}</span>
     </button>
   );

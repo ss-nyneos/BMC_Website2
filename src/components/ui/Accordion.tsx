@@ -6,15 +6,7 @@ export type AccordionItemData = {
   content: ReactNode;
 };
 
-/**
- * `rules` separates items with hairlines, for dense lists such as navigation.
- * `cards` sets each item on its own white card with a blue and green toggle, for
- * long-form answers where each question should read as a unit.
- */
-export type AccordionVariant = "rules" | "cards";
-
 type AccordionProps = {
-  variant?: AccordionVariant;
   items: AccordionItemData[];
   /** Index open on first render. Leave undefined for all closed. */
   defaultOpen?: number;
@@ -34,26 +26,14 @@ export function AccordionItem({
   isOpen,
   onToggle,
   id,
-  variant = "rules",
 }: {
   item: AccordionItemData;
   isOpen: boolean;
   onToggle: () => void;
   id: string;
-  variant?: AccordionVariant;
 }) {
-  const cards = variant === "cards";
-
   return (
-    <div
-      className={
-        cards
-          ? `group spotlight spotlight-surface rounded-xl bg-surface px-5 transition-[box-shadow] duration-500 ease-out-expo sm:px-7 ${
-              isOpen ? "shadow-card-hover" : "shadow-card hover:shadow-card-hover"
-            }`
-          : "border-b border-line"
-      }
-    >
+    <div className="border-b border-line">
       <h3>
         <button
           type="button"
@@ -66,19 +46,11 @@ export function AccordionItem({
           <span className="text-body-sm font-medium">{item.title}</span>
           <span
             aria-hidden="true"
-            className={
-              cards
-                ? `grid h-10 w-10 shrink-0 place-items-center rounded-pill text-ink transition-[background-color,transform] duration-500 ease-out-expo ${
-                    isOpen
-                      ? "rotate-180 bg-purple"
-                      : "bg-sage group-hover:-rotate-[10deg] group-hover:scale-110"
-                  }`
-                : `grid h-9 w-9 shrink-0 place-items-center rounded-pill border transition-colors duration-200 ${
-                    isOpen
-                      ? "border-forest bg-forest text-white"
-                      : "border-line bg-lavender-soft text-forest"
-                  }`
-            }
+            className={`grid h-9 w-9 shrink-0 place-items-center rounded-pill border transition-colors duration-200 ${
+              isOpen
+                ? "border-forest bg-forest text-white"
+                : "border-line bg-lavender-soft text-forest"
+            }`}
           >
             {isOpen ? <MinusIcon className="h-4 w-4" /> : <PlusIcon className="h-4 w-4" />}
           </span>
@@ -101,12 +73,7 @@ export function AccordionItem({
   );
 }
 
-export function Accordion({
-  items,
-  defaultOpen,
-  className = "",
-  variant = "rules",
-}: AccordionProps) {
+export function Accordion({ items, defaultOpen, className = "" }: AccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(defaultOpen ?? null);
   const baseId = useId();
 
@@ -119,7 +86,6 @@ export function Accordion({
           item={item}
           isOpen={openIndex === index}
           onToggle={() => setOpenIndex(openIndex === index ? null : index)}
-          variant={variant}
         />
       ))}
     </div>

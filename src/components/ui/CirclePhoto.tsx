@@ -22,11 +22,6 @@ type CirclePhotoProps = {
  *
  * Width and height are always emitted so the circle reserves its own space and
  * nothing on the page shifts while the image downloads.
- *
- * The photograph sits in its own clipped circle so it can zoom slightly when
- * the nearest `group` (a card, a photo panel) is hovered without the image
- * spilling past the ring. `isolate` keeps Safari clipping a transformed child
- * to the rounded edge.
  */
 const fields: Record<PhotoField | "none", string> = {
   mint: "bg-mint p-2 sm:p-3",
@@ -40,19 +35,17 @@ const fields: Record<PhotoField | "none", string> = {
 export function CirclePhoto({ photo, field = "none", priority = false, id, className = "" }: CirclePhotoProps) {
   return (
     <div className={`rounded-pill ${fields[field]} ${className}`}>
-      <div className="isolate overflow-hidden rounded-pill">
-        <img
-          src={photo.src}
-          srcSet={id ? srcSet(id, photo.width, photo.height) : undefined}
-          alt={photo.alt}
-          width={photo.width}
-          height={photo.height}
-          loading={priority ? "eager" : "lazy"}
-          decoding={priority ? "sync" : "async"}
-          {...{ fetchpriority: priority ? "high" : "auto" }}
-          className="aspect-square h-auto w-full rounded-pill object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.07]"
-        />
-      </div>
+      <img
+        src={photo.src}
+        srcSet={id ? srcSet(id, photo.width, photo.height) : undefined}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+        loading={priority ? "eager" : "lazy"}
+        decoding={priority ? "sync" : "async"}
+        fetchPriority={priority ? "high" : "auto"}
+        className="aspect-square h-auto w-full rounded-pill object-cover"
+      />
     </div>
   );
 }

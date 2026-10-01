@@ -23,7 +23,7 @@ export function LinkArrow({ href, children, tone = "lavender", className = "", e
       <span className="underline decoration-transparent underline-offset-4 transition-colors duration-200 group-hover:decoration-current">
         {children}
       </span>
-      <CircleArrow tone={tone} size="sm" />
+      <CircleArrow tone={tone} size="sm" className="group-hover:translate-x-0.5" />
     </a>
   );
 }

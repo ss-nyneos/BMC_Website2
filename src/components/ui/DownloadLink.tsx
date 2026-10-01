@@ -11,7 +11,7 @@ export function DownloadLink({ notice }: { notice: Notice }) {
     <a
       href={notice.href}
       download
-      className="group flex items-center justify-between gap-6 rounded-2xl bg-surface p-6 shadow-card transition-[transform,box-shadow,background-color,color] duration-500 ease-out-expo hover:-translate-y-1 hover:bg-lavender-soft hover:text-ink hover:shadow-card-hover sm:p-7"
+      className="group flex items-center justify-between gap-6 rounded-2xl border border-line bg-surface p-6 transition-colors duration-200 ease-out-quint hover:bg-lavender-soft hover:text-ink sm:p-7"
     >
       <span>
         <span className="block text-body-sm font-medium">{notice.title}</span>
@@ -21,9 +21,9 @@ export function DownloadLink({ notice }: { notice: Notice }) {
       </span>
       <span
         aria-hidden="true"
-        className="grid h-11 w-11 shrink-0 place-items-center rounded-pill bg-lavender text-ink transition-[transform,background-color] duration-300 ease-out-expo group-hover:scale-110 group-hover:bg-purple"
+        className="grid h-11 w-11 shrink-0 place-items-center rounded-pill bg-lavender text-ink transition-transform duration-200 group-hover:translate-y-0.5"
       >
-        <DownloadIcon className="h-5 w-5 group-hover:animate-bob" />
+        <DownloadIcon className="h-5 w-5" />
       </span>
     </a>
   );

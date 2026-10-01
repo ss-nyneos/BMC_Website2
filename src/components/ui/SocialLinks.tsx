@@ -17,7 +17,7 @@ export function SocialLinks() {
             href={channel.href}
             target="_blank"
             rel="noreferrer noopener"
-            className="grid h-11 w-11 place-items-center rounded-pill border border-white/30 text-white transition-[background-color,color,transform] duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-white hover:text-navy"
+            className="grid h-11 w-11 place-items-center rounded-pill border border-ink/25 text-ink transition-colors duration-200 ease-out-quint hover:bg-ink hover:text-white"
           >
             <channel.Icon className="h-5 w-5" />
             <span className="sr-only">{channel.name}</span>

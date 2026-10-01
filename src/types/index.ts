@@ -46,8 +46,6 @@ export interface RateItem {
   rate: string;
   note?: string;
   href: string;
-  /** The card's background photograph, under a scrim, per spec section 6.4. */
-  photo: { src: string; alt: string; width: number; height: number };
 }
 
 export interface Product {
@@ -95,7 +93,7 @@ export interface ProcessStep {
 export interface ProcessColumn {
   index: 1 | 2;
   head: string;
-  tone: "accent" | "brand";
+  tone: "orange" | "blue";
   steps: ProcessStep[];
 }
 

@@ -37,14 +37,10 @@ export function ColorCard({ title, caption, href, tone, photo, id }: ColorCardPr
   return (
     <a
       href={href}
-      className={`group flex h-full flex-col gap-8 rounded-2xl p-7 shadow-inset transition-[transform,box-shadow] duration-500 ease-out-expo hover:-translate-y-2 hover:shadow-inset-hover sm:p-9 ${tones[tone]}`}
+      className={`group flex flex-col gap-8 rounded-2xl p-7 transition-transform duration-300 ease-out-quint hover:-translate-y-1 sm:p-9 ${tones[tone]}`}
     >
-      <div className="mx-auto w-full max-w-[280px]">
-        <CirclePhoto
-          photo={photo}
-          id={id}
-          className="transition-transform duration-700 ease-out-expo group-hover:-rotate-3 group-hover:scale-[1.03]"
-        />
+      <div className="mx-auto w-full max-w-[280px] overflow-hidden">
+        <CirclePhoto photo={photo} id={id} className="transition-transform duration-500 ease-out-quint group-hover:scale-[1.03]" />
       </div>
 
       <div className="flex items-end justify-between gap-5">
@@ -52,7 +48,7 @@ export function ColorCard({ title, caption, href, tone, photo, id }: ColorCardPr
           <h3 className="text-h3">{title}</h3>
           <p className="mt-2 text-meta text-current/85">{caption}</p>
         </div>
-        <CircleArrow tone={arrowTone[tone]} />
+        <CircleArrow tone={arrowTone[tone]} className="group-hover:translate-x-0.5" />
       </div>
     </a>
   );
