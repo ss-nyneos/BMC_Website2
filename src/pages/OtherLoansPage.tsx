@@ -7,7 +7,7 @@ import { LoanProductList } from "../components/ui/LoanProductList";
 import { PillButton } from "../components/ui/PillButton";
 import { LinkArrow } from "../components/ui/LinkArrow";
 import { otherLoanProducts, otherLoansIntro, primeLendingRate } from "../data/loans";
-import { photoId, photos } from "../data/photos";
+import { photos } from "../data/photos";
 
 /**
  * Other loans: the schemes that do not sit under term lending or working
@@ -24,7 +24,6 @@ export function OtherLoansPage() {
         description="Personal borrowing, and lending against government securities and life policies."
         meta={`Prime Lending Rate ${primeLendingRate.rate}, with effect from ${primeLendingRate.effectiveFrom}`}
         photo={photos.business}
-        photoId={photoId.business}
         photoField="mint"
       />
 
@@ -51,10 +50,7 @@ export function OtherLoansPage() {
 
               <MediaPanel
                 className="mt-10 hidden lg:flex"
-                tone="blue"
                 photo={photos.heritage}
-                id={photoId.heritage}
-                maxWidth={320}
               />
             </div>
 

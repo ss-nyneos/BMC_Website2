@@ -24,7 +24,7 @@ export function RateStrip() {
           </PillButton>
         </div>
 
-        <div className="reveal mt-10 grid gap-4 sm:gap-5 lg:grid-cols-3">
+        <div className="reveal-group mt-10 grid gap-4 sm:gap-5 lg:grid-cols-3">
           {rates.map((item) => (
             <RateCard key={item.product} item={item} />
           ))}

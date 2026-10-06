@@ -57,12 +57,12 @@ export function LoanProductList({ products }: { products: LoanProduct[] }) {
             {product.href ? (
               <a
                 href={product.href}
-                className="group flex h-full flex-col rounded-2xl border border-line bg-lavender-soft p-6 text-ink transition-colors duration-200 ease-out-quint hover:bg-lavender sm:p-7"
+                className="group flex h-full flex-col rounded-2xl bg-lavender-soft p-6 text-ink transition-colors duration-200 ease-out-quint hover:bg-lavender sm:p-7"
               >
                 {body}
               </a>
             ) : (
-              <div className="flex h-full flex-col rounded-2xl border border-line bg-lavender-soft p-6 text-ink sm:p-7">
+              <div className="flex h-full flex-col rounded-2xl bg-lavender-soft p-6 text-ink sm:p-7">
                 {body}
               </div>
             )}

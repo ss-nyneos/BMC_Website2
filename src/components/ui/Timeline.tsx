@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { ProcessColumn, ProcessStep } from "../../types";
 
 /**
@@ -6,6 +7,11 @@ import type { ProcessColumn, ProcessStep } from "../../types";
  * Numbers are used here because the content is genuinely ordered: you cannot
  * collect a card before the account exists. Marked up as nested ordered lists
  * so that order is announced, not just drawn.
+ *
+ * When the timeline scrolls into view it draws itself in that order: each dot
+ * lands and the rail runs down to the next step (`.motion-dot` and
+ * `.motion-rail` in globals.css, sequenced by `--step`). The motion carries the
+ * same information the numbers do.
  */
 const heads = {
   orange: "bg-orange text-ink",
@@ -26,21 +32,23 @@ function TimelineStep({
   step,
   tone,
   isLast,
+  index,
 }: {
   step: ProcessStep;
   tone: "orange" | "blue";
   isLast: boolean;
+  index: number;
 }) {
   return (
-    <li className="relative pb-11 pl-10 last:pb-0">
+    <li className="relative pb-11 pl-10 last:pb-0" style={{ "--step": index } as CSSProperties}>
       <span
         aria-hidden="true"
-        className={`absolute left-[5px] top-2 h-3.5 w-3.5 rounded-pill ${dots[tone]}`}
+        className={`motion-dot absolute left-[5px] top-2 h-3.5 w-3.5 rounded-pill ${dots[tone]}`}
       />
       {!isLast ? (
         <span
           aria-hidden="true"
-          className={`absolute bottom-2 left-[11px] top-7 w-0.5 rounded-pill bg-gradient-to-b ${rails[tone]}`}
+          className={`motion-rail absolute bottom-2 left-[11px] top-7 w-0.5 rounded-pill bg-gradient-to-b ${rails[tone]}`}
         />
       ) : null}
 
@@ -83,6 +91,7 @@ export function Timeline({ columns }: { columns: ProcessColumn[] }) {
                 step={step}
                 tone={column.tone}
                 isLast={index === column.steps.length - 1}
+                index={index}
               />
             ))}
           </ol>

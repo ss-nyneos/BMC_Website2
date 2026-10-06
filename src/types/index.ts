@@ -46,6 +46,8 @@ export interface RateItem {
   rate: string;
   note?: string;
   href: string;
+  /** Background photograph. The card's text is set in white over it. */
+  photo: Photo;
 }
 
 export interface Product {
@@ -69,17 +71,15 @@ export interface Photo {
   /** Low-cost intrinsic ratio hint so nothing shifts while images load. */
   width: number;
   height: number;
+  /** Width-described sources, for self-hosted photos with no Unsplash id. */
+  srcSet?: string;
 }
 
-/** Colour fields a ColorCard commits to. Narrower than PhotoField on purpose:
- *  orange is a marker colour and never a card surface. */
-export type CardTone = "purple" | "blue" | "mint" | "lavender";
 
 export interface Pillar {
   title: string;
   caption: string;
   href: string;
-  tone: CardTone;
   photo: Photo;
 }
 

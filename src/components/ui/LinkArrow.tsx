@@ -20,7 +20,7 @@ export function LinkArrow({ href, children, tone = "lavender", className = "", e
       className={`group inline-flex min-h-11 items-center gap-2.5 rounded-pill py-1.5 text-label font-medium transition-opacity duration-200 hover:opacity-80 ${className}`}
       {...(external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
     >
-      <span className="underline decoration-transparent underline-offset-4 transition-colors duration-200 group-hover:decoration-current">
+      <span className="underline-draw pb-0.5">
         {children}
       </span>
       <CircleArrow tone={tone} size="sm" className="group-hover:translate-x-0.5" />

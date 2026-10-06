@@ -33,6 +33,9 @@ const rgb = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
 
 export default {
   darkMode: "class",
+  // Hover styles only apply on devices that can actually hover, so a tap on a
+  // phone never leaves a card stuck in its hover state.
+  future: { hoverOnlyWhenSupported: true },
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
@@ -71,7 +74,10 @@ export default {
       borderRadius: { pill: "9999px", "2xl": "32px", xl: "24px", lg: "16px" },
       boxShadow: { menu: "0 12px 40px rgba(20,10,46,0.14)" },
       maxWidth: { container: "1280px", measure: "34ch", prose: "62ch" },
-      borderColor: { line: rgb("--line") },
+      // `line` takes Tailwind's alpha modifier, so a bare `border-line` is the
+      // full-strength ink. `hairline` is the faint card edge the spec intends:
+      // ink at 12% in light mode, cream at 16% in dark (the --line-alpha pair).
+      borderColor: { line: rgb("--line"), hairline: "rgb(var(--line) / var(--line-alpha))" },
       spacing: { 13: "3.25rem", 18: "4.5rem", 30: "7.5rem" },
       zIndex: {
         // Semantic scale. No arbitrary 999s anywhere in the codebase.
@@ -85,6 +91,7 @@ export default {
       },
       transitionTimingFunction: {
         "out-quint": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
         "rise-in": {
@@ -96,11 +103,46 @@ export default {
           to: { opacity: "1", transform: "scale(1)" },
         },
         "scrim-in": { from: { opacity: "0" }, to: { opacity: "1" } },
+        "scrim-out": { from: { opacity: "1" }, to: { opacity: "0" } },
+        // Hero headline: each word rises out of its own clipped line box.
+        "word-rise": {
+          from: { transform: "translate3d(0,108%,0)" },
+          to: { transform: "translate3d(0,0,0)" },
+        },
+        // Dialog on wide screens: grows out of the centre.
+        "modal-in": {
+          from: { opacity: "0", transform: "translate3d(0,12px,0) scale(0.96)" },
+          to: { opacity: "1", transform: "translate3d(0,0,0) scale(1)" },
+        },
+        "modal-out": {
+          from: { opacity: "1", transform: "translate3d(0,0,0) scale(1)" },
+          to: { opacity: "0", transform: "translate3d(0,8px,0) scale(0.98)" },
+        },
+        // Dialog on phones: a bottom sheet, so it rises from the thumb's edge.
+        "sheet-in": {
+          from: { transform: "translate3d(0,100%,0)" },
+          to: { transform: "translate3d(0,0,0)" },
+        },
+        "sheet-out": {
+          from: { transform: "translate3d(0,0,0)" },
+          to: { transform: "translate3d(0,100%,0)" },
+        },
+        "panel-in": {
+          from: { opacity: "0", transform: "translate3d(0,10px,0)" },
+          to: { opacity: "1", transform: "translate3d(0,0,0)" },
+        },
       },
       animation: {
         "rise-in": "rise-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both",
         "pop-in": "pop-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both",
-        "scrim-in": "scrim-in 180ms ease-out both",
+        "scrim-in": "scrim-in 220ms ease-out both",
+        "scrim-out": "scrim-out 160ms ease-in both",
+        "word-rise": "word-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "modal-in": "modal-in 360ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "modal-out": "modal-out 180ms cubic-bezier(0.4, 0, 1, 1) both",
+        "sheet-in": "sheet-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "sheet-out": "sheet-out 220ms cubic-bezier(0.4, 0, 1, 1) both",
+        "panel-in": "panel-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both",
       },
     },
   },

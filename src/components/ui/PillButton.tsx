@@ -43,9 +43,9 @@ const variants: Record<PillVariant, { shell: string; arrow: ArrowTone }> = {
     shell: "bg-lavender text-ink hover:bg-lavender-soft",
     arrow: "ink",
   },
-  // Hairline row, fills on hover.
+  // Hairline row; the fill sweeps in from the left on hover.
   outline: {
-    shell: "border border-line bg-transparent text-fg hover:bg-lavender-soft hover:text-ink",
+    shell: "fill-wipe fill-wipe-x border border-line bg-transparent text-fg hover:text-ink",
     arrow: "lavender",
   },
   // Highest-emphasis action on a light page: gold pill, hairline, ink label.
@@ -74,7 +74,9 @@ export function PillButton(props: PillButtonProps) {
   const tokens = variants[variant];
   const shell = [
     "group inline-flex select-none items-center justify-between whitespace-nowrap rounded-pill",
-    "font-medium leading-none transition-colors duration-200 ease-out-quint",
+    "font-medium leading-none transition-[color,background-color,border-color,transform] duration-200 ease-out-quint",
+    // Press feedback: the pill settles slightly under the pointer.
+    "active:scale-[0.97]",
     "disabled:pointer-events-none disabled:opacity-50",
     sizes[size],
     tokens.shell,

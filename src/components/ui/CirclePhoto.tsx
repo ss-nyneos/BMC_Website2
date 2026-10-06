@@ -7,8 +7,18 @@ type CirclePhotoProps = {
   field?: PhotoField | "none";
   /** Above-the-fold images opt out of lazy loading. */
   priority?: boolean;
-  /** Unsplash id, when a 2x source set is wanted. */
+  /**
+   * Unsplash id, for a 1x/2x set when the photo carries no `srcSet` of its
+   * own. Every photo in `data/photos` now does, so this is a fallback.
+   */
   id?: string;
+  /** Rendered width hint for a self-hosted `photo.srcSet`. */
+  sizes?: string;
+  /**
+   * Scroll drift of the image inside its circle, as a fraction of its height
+   * (see useParallax). Keep it at or under 0.08 so the edge never shows.
+   */
+  parallax?: number;
   className?: string;
 };
 
@@ -22,6 +32,10 @@ type CirclePhotoProps = {
  *
  * Width and height are always emitted so the circle reserves its own space and
  * nothing on the page shifts while the image downloads.
+ *
+ * The inner mask is what lets the photograph move without the circle moving:
+ * parallax and the hover zoom transform the image, and the mask crops it.
+ * `isolate` keeps Safari clipping a transformed child to the rounded edge.
  */
 const fields: Record<PhotoField | "none", string> = {
   mint: "bg-mint p-2 sm:p-3",
@@ -32,20 +46,34 @@ const fields: Record<PhotoField | "none", string> = {
   none: "p-0",
 };
 
-export function CirclePhoto({ photo, field = "none", priority = false, id, className = "" }: CirclePhotoProps) {
+export function CirclePhoto({
+  photo,
+  field = "none",
+  priority = false,
+  id,
+  parallax,
+  sizes = "(min-width: 1024px) 280px, 45vw",
+  className = "",
+}: CirclePhotoProps) {
   return (
-    <div className={`rounded-pill ${fields[field]} ${className}`}>
-      <img
-        src={photo.src}
-        srcSet={id ? srcSet(id, photo.width, photo.height) : undefined}
-        alt={photo.alt}
-        width={photo.width}
-        height={photo.height}
-        loading={priority ? "eager" : "lazy"}
-        decoding={priority ? "sync" : "async"}
-        fetchPriority={priority ? "high" : "auto"}
-        className="aspect-square h-auto w-full rounded-pill object-cover"
-      />
+    <div className={`circle-photo rounded-pill ${fields[field]} ${className}`}>
+      <div className="isolate overflow-hidden rounded-pill">
+        <img
+          src={photo.src}
+          srcSet={photo.srcSet ?? (id ? srcSet(id, photo.width, photo.height) : undefined)}
+          sizes={photo.srcSet ? sizes : undefined}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
+          loading={priority ? "eager" : "lazy"}
+          decoding={priority ? "sync" : "async"}
+          fetchPriority={priority ? "high" : "auto"}
+          data-parallax={parallax}
+          className={`block aspect-square h-auto w-full rounded-pill object-cover ${
+            parallax ? "parallax-img" : ""
+          }`}
+        />
+      </div>
     </div>
   );
 }

@@ -142,7 +142,7 @@ export function EnquiryForm() {
     return (
       <div
         role="status"
-        className="flex h-full flex-col justify-center rounded-2xl border border-line bg-surface p-8 sm:p-10"
+        className="flex h-full flex-col justify-center rounded-2xl border border-hairline bg-surface p-8 sm:p-10"
       >
         <h3 className="text-h3">Thank you, we have your enquiry</h3>
         <p className="mt-5 max-w-prose text-body-sm text-fg-muted">
@@ -172,7 +172,7 @@ export function EnquiryForm() {
       noValidate
       onSubmit={onSubmit}
       aria-labelledby="enquiry-heading"
-      className="rounded-2xl border border-line bg-surface p-6 sm:p-8"
+      className="rounded-2xl border border-hairline bg-surface p-6 sm:p-8"
     >
       <div aria-live="polite">
         {errorCount > 0 ? (

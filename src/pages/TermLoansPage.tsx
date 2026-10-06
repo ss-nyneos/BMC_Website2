@@ -6,7 +6,7 @@ import { LoanProductList } from "../components/ui/LoanProductList";
 import { PillButton } from "../components/ui/PillButton";
 import { LinkArrow } from "../components/ui/LinkArrow";
 import { primeLendingRate, termLoanProducts } from "../data/loans";
-import { photoId, photos } from "../data/photos";
+import { loanPhotos } from "../data/photos";
 
 /**
  * Term loans: the bank's full borrowing range in one view.
@@ -22,8 +22,7 @@ export function TermLoansPage() {
         title="Term loans"
         description="What the bank lends against, from a housing loan to an overdraft on a fixed deposit you already hold."
         meta={`Prime Lending Rate ${primeLendingRate.rate}, with effect from ${primeLendingRate.effectiveFrom}`}
-        photo={photos.personal}
-        photoId={photoId.personal}
+        photo={loanPhotos.homeCircle}
         photoField="lavender"
       />
 

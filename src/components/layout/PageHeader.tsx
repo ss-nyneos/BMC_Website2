@@ -23,6 +23,11 @@ type PageHeaderProps = {
   photoField?: PhotoField;
 };
 
+/**
+ * Plays a short entrance on every page, since `<main>` remounts on navigation:
+ * the title, standfirst and photograph rise in sequence, which doubles as the
+ * page transition.
+ */
 export function PageHeader({
   title,
   description,
@@ -41,20 +46,35 @@ export function PageHeader({
           }
         >
           <div>
-            <h1 id={id} className="max-w-[22ch] text-display">
+            <h1 id={id} className="max-w-[22ch] text-display animate-rise-in">
               {title}
             </h1>
 
             {description ? (
-              <p className="mt-6 max-w-prose text-body text-fg-muted">{description}</p>
+              <p
+                className="mt-6 max-w-prose text-body text-fg-muted animate-rise-in"
+                style={{ animationDelay: "90ms" }}
+              >
+                {description}
+              </p>
             ) : null}
 
-            {meta ? <p className="mt-6 text-meta text-fg-muted">{meta}</p> : null}
+            {meta ? (
+              <p
+                className="mt-6 text-meta text-fg-muted animate-rise-in"
+                style={{ animationDelay: "160ms" }}
+              >
+                {meta}
+              </p>
+            ) : null}
           </div>
 
           {photo ? (
-            <div className="w-full max-w-[160px] sm:max-w-[180px] md:max-w-[210px] md:justify-self-end">
-              <CirclePhoto photo={photo} id={photoId} field={photoField} priority />
+            <div
+              className="w-full max-w-[160px] animate-pop-in sm:max-w-[180px] md:max-w-[210px] md:justify-self-end"
+              style={{ animationDelay: "120ms" }}
+            >
+              <CirclePhoto photo={photo} id={photoId} field={photoField} parallax={0.06} priority />
             </div>
           ) : null}
         </div>

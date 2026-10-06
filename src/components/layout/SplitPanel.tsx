@@ -18,12 +18,16 @@ type SplitPanelProps = {
  * the photograph regardless of which side the photograph takes on desktop. The
  * desktop arrangement is done with `order`, which does not affect reading order
  * for assistive technology.
+ *
+ * Every split carries its own scroll entrance (`.reveal-split` in globals.css):
+ * the media panel wipes up from its bottom edge, its photograph settles, and
+ * the text half rises a beat behind. Callers no longer add `.reveal`.
  */
 export function SplitPanel({ media, body, reverse = false, className = "" }: SplitPanelProps) {
   return (
-    <div className={`grid gap-4 sm:gap-5 lg:grid-cols-2 ${className}`}>
-      <div className={`flex ${reverse ? "lg:order-2" : "lg:order-1"}`}>{body}</div>
-      <div className={`flex ${reverse ? "lg:order-1" : "lg:order-2"}`}>{media}</div>
+    <div className={`reveal-split grid gap-4 sm:gap-5 lg:grid-cols-2 ${className}`}>
+      <div className={`split-body flex ${reverse ? "lg:order-2" : "lg:order-1"}`}>{body}</div>
+      <div className={`split-media flex ${reverse ? "lg:order-1" : "lg:order-2"}`}>{media}</div>
     </div>
   );
 }

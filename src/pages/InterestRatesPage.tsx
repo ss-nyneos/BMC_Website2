@@ -7,7 +7,7 @@ import { CalloutPanel } from "../components/ui/CalloutPanel";
 import { PillButton } from "../components/ui/PillButton";
 import { LinkArrow } from "../components/ui/LinkArrow";
 import { primeLendingRate } from "../data/loans";
-import { photoId, photos } from "../data/photos";
+import { loanPhotos } from "../data/photos";
 import { rates, ratesDisclaimer } from "../data/rates";
 
 /**
@@ -26,8 +26,7 @@ export function InterestRatesPage() {
         title="Rate of interest on loans and advances"
         description="The bank's Prime Lending Rate, and the headline rates for the three products most people ask about."
         meta={primeLendingRate.circular}
-        photo={photos.heroManGlasses}
-        photoId={photoId.heroManGlasses}
+        photo={loanPhotos.goldCircle}
         photoField="mint"
       />
 

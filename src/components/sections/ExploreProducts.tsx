@@ -1,13 +1,13 @@
 import { Container } from "../layout/Container";
 import { SplitPanel } from "../layout/SplitPanel";
-import { CirclePhoto } from "../ui/CirclePhoto";
+import { MediaPanel } from "../ui/MediaPanel";
 import { PillListRow } from "../ui/PillListRow";
 import { products } from "../../data/products";
-import { photoId, photos } from "../../data/photos";
+import { photos } from "../../data/photos";
 
 /**
- * Reference image 4: the product list as hairline pill rows beside a saturated
- * photo panel.
+ * Reference image 4: the product list as hairline pill rows beside a full-bleed
+ * photograph.
  *
  * These eight rows replace the old site's mega-nav as the main way into the
  * catalogue. Each row is a full-width link, which is the largest target the
@@ -18,18 +18,9 @@ export function ExploreProducts() {
     <section aria-labelledby="products-heading" className="bg-page py-4 lg:py-6">
       <Container>
         <SplitPanel
-          className="reveal"
-          media={
-            <div className="flex w-full items-center justify-center rounded-2xl bg-purple p-8 sm:p-12 lg:p-16">
-              <CirclePhoto
-                photo={photos.counter}
-                id={photoId.counter}
-                className="w-full max-w-[420px]"
-              />
-            </div>
-          }
+          media={<MediaPanel photo={photos.shopkeeper} />}
           body={
-            <div className="flex w-full flex-col justify-center rounded-2xl border border-line bg-surface p-8 sm:p-12 lg:p-14">
+            <div className="flex w-full flex-col justify-center rounded-2xl border border-hairline bg-surface p-8 sm:p-12 lg:p-14">
               <h2 id="products-heading" className="max-w-[16ch] text-h2">
                 Everything you need to bank
               </h2>

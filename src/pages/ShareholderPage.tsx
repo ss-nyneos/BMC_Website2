@@ -3,7 +3,7 @@ import { PageHeader } from "../components/layout/PageHeader";
 import { Section } from "../components/layout/Section";
 import { CalloutPanel } from "../components/ui/CalloutPanel";
 import { LinkArrow } from "../components/ui/LinkArrow";
-import { photoId, photos } from "../data/photos";
+import { photos } from "../data/photos";
 import {
   shareholderAsAt,
   shareholderFigures,
@@ -21,12 +21,12 @@ import {
  *
  * The three figure cards take the homepage's gold / mint / pale-mint trio, with
  * text at the fixed `ink` (85% for the supporting line) so it holds in both
- * themes — the same pairing `ColorCard` uses.
+ * themes, the pairing every light accent panel uses.
  */
 const figureTones = [
-  "border border-line bg-purple",
-  "border border-line bg-mint",
-  "border border-line bg-sage",
+  "bg-purple",
+  "bg-mint",
+  "bg-sage",
 ];
 
 export function ShareholderPage() {
@@ -37,7 +37,6 @@ export function ShareholderPage() {
         description="Membership of the bank, as reported for the financial year."
         meta={`Figures as at ${shareholderAsAt}, compared with ${shareholderPriorAsAt}`}
         photo={photos.heritage}
-        photoId={photoId.heritage}
         photoField="lavender"
       />
 

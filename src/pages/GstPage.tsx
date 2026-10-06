@@ -4,7 +4,7 @@ import { Section } from "../components/layout/Section";
 import { DataTable } from "../components/ui/DataTable";
 import { CalloutPanel } from "../components/ui/CalloutPanel";
 import { LinkArrow } from "../components/ui/LinkArrow";
-import { photoId, photos } from "../data/photos";
+import { photos } from "../data/photos";
 import { gstIssuer, gstRegistrations, smsChargeNote } from "../data/gst";
 
 /**
@@ -23,7 +23,6 @@ export function GstPage() {
         description="Bombay Mercantile Co-operative Bank is registered for GST in each state where it operates. Use the number for the state your branch is in."
         meta={gstIssuer}
         photo={photos.business}
-        photoId={photoId.business}
         photoField="mint"
       />
 

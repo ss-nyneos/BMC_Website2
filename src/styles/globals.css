@@ -81,18 +81,244 @@
   }
 }
 
+:root {
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 @layer components {
-  /* Scroll reveal. Content is visible by default; the hidden start state is
-     only applied once JS confirms motion is allowed, so a failed script or a
-     headless render never ships a blank section. */
+  /* ---------------------------------------------------------------------------
+     Scroll reveals. Content is visible by default; every hidden start state
+     below is scoped to `.js-motion`, which useReveal adds only once JS confirms
+     motion is allowed, so a failed script, reduced motion or a headless render
+     never ships a blank section.
+
+     Each variant fits what it reveals rather than one fade on every block:
+       .reveal        a single block rises into place
+       .reveal-group  the children pop up in sequence (rows of cards)
+       .reveal-split  the photo panel wipes upward while its photograph
+                      settles from a slight zoom, and the text half rises a
+                      beat later
+  --------------------------------------------------------------------------- */
   .js-motion .reveal {
     opacity: 0;
     transform: translate3d(0, 16px, 0);
   }
 
   .js-motion .reveal.is-in {
-    animation: rise-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: rise-in 620ms var(--ease-out-quint) both;
     animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js-motion .reveal-group > * {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) scale(0.96);
+  }
+
+  .js-motion .reveal-group.is-in > * {
+    animation: pop-up 760ms var(--ease-out-expo) both;
+    animation-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  .js-motion .reveal-split .split-media {
+    clip-path: inset(100% 0 0 0 round 32px);
+  }
+
+  .js-motion .reveal-split.is-in .split-media {
+    animation: wipe-up 900ms var(--ease-out-expo) both;
+  }
+
+  /* `scale`, not `transform`: the image's transform belongs to parallax. */
+  .js-motion .reveal-split .split-media .photo-panel img {
+    scale: 1.14;
+  }
+
+  .js-motion .reveal-split.is-in .split-media .photo-panel img {
+    animation: zoom-settle 1400ms var(--ease-out-expo) both;
+  }
+
+  .js-motion .reveal-split .split-body {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+
+  .js-motion .reveal-split.is-in .split-body {
+    animation: rise-in 760ms var(--ease-out-quint) 140ms both;
+  }
+
+  /* The application timeline draws itself in order: each dot lands, then the
+     rail runs down to the next step. `--step` is set per step in Timeline. */
+  .js-motion .reveal .motion-dot {
+    transform: scale(0);
+  }
+
+  .js-motion .reveal.is-in .motion-dot {
+    animation: dot-pop 460ms var(--ease-out-expo) both;
+    animation-delay: calc(var(--step, 0) * 180ms + 160ms);
+  }
+
+  .js-motion .reveal .motion-rail {
+    transform: scaleY(0);
+    transform-origin: 50% 0;
+  }
+
+  .js-motion .reveal.is-in .motion-rail {
+    animation: draw-y 820ms var(--ease-out-quint) both;
+    animation-delay: calc(var(--step, 0) * 180ms + 280ms);
+  }
+
+  /* ---------------------------------------------------------------------------
+     Parallax. useParallax writes `--parallax-y` on every `[data-parallax]`
+     element in view. Photographs drift inside their circular mask, so the image
+     is oversized slightly to keep its edge from ever showing. Without JS or
+     under reduced motion the variable is never written and nothing is scaled.
+  --------------------------------------------------------------------------- */
+  .js-motion [data-parallax] {
+    transform: translate3d(0, var(--parallax-y, 0px), 0);
+  }
+
+  .js-motion .parallax-img[data-parallax] {
+    transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.16);
+  }
+
+  /* ---------------------------------------------------------------------------
+     Hover materials.
+
+     .fill-wipe  the lavender-soft hover fill sweeps up from the bottom edge
+                 (add .fill-wipe-x to sweep in from the left, for pill rows).
+                 In dark mode it crossfades instead: the label flips to ink on
+                 hover, and a sweep would leave it dark-on-dark until the fill
+                 caught up.
+     .hover-zoom the photograph zooms inside its circle. It uses the
+                 independent `scale` property so it composes with parallax.
+  --------------------------------------------------------------------------- */
+  .fill-wipe {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .fill-wipe::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: #e0f1fe;
+    transform: scaleY(0);
+    transform-origin: 50% 100%;
+    transition: transform 420ms var(--ease-out-quint);
+  }
+
+  .fill-wipe-x::before {
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+
+  .dark .fill-wipe::before {
+    transform: none;
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+  }
+
+  .hover-zoom img {
+    transition: scale 700ms var(--ease-out-quint);
+  }
+
+  @media (hover: hover) {
+    .fill-wipe:hover::before {
+      transform: none;
+    }
+
+    .dark .fill-wipe:hover::before {
+      opacity: 1;
+    }
+
+    .group:hover .hover-zoom img {
+      scale: 1.07;
+    }
+  }
+
+  /* The arrow chip's hover: the arrow leaves through the right edge and a
+     second one arrives from the left, as if the chip had moved on a step. */
+  .arrow-swap > svg {
+    grid-area: 1 / 1;
+    transition: transform 380ms var(--ease-out-quint);
+  }
+
+  .arrow-swap > svg + svg {
+    transform: translate3d(-180%, 0, 0);
+  }
+
+  @media (hover: hover) {
+    .group:hover .arrow-swap > svg:first-child {
+      transform: translate3d(180%, 0, 0);
+    }
+
+    .group:hover .arrow-swap > svg + svg {
+      transform: none;
+    }
+  }
+
+  /* An underline that draws in from the left rather than fading in. */
+  .underline-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 360ms var(--ease-out-quint);
+  }
+
+  @media (hover: hover) {
+    .group:hover .underline-draw {
+      background-size: 100% 1px;
+    }
+  }
+}
+
+@keyframes pop-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes wipe-up {
+  from {
+    clip-path: inset(100% 0 0 0 round 32px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 32px);
+  }
+}
+
+@keyframes zoom-settle {
+  from {
+    scale: 1.14;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes dot-pop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes draw-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
   }
 }
 
@@ -110,8 +336,18 @@
     scroll-behavior: auto !important;
   }
 
-  .js-motion .reveal {
+  .js-motion .reveal,
+  .js-motion .reveal-group > *,
+  .js-motion .reveal-split .split-body {
     opacity: 1;
     transform: none;
+  }
+
+  .js-motion .reveal-split .split-media .photo-panel img {
+    scale: 1;
+  }
+
+  .js-motion .reveal-split .split-media {
+    clip-path: none;
   }
 }

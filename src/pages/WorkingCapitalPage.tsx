@@ -7,7 +7,7 @@ import { LoanProductList } from "../components/ui/LoanProductList";
 import { PillButton } from "../components/ui/PillButton";
 import { LinkArrow } from "../components/ui/LinkArrow";
 import { primeLendingRate, workingCapitalIntro, workingCapitalProducts } from "../data/loans";
-import { photoId, photos } from "../data/photos";
+import { photos } from "../data/photos";
 
 /**
  * Working capital: the overdraft facilities the bank extends to businesses.
@@ -22,8 +22,7 @@ export function WorkingCapitalPage() {
         title="Working capital facilities"
         description="Overdraft facilities for traders, manufacturers and businesses that need to fund a trading cycle."
         meta={`Prime Lending Rate ${primeLendingRate.rate}, with effect from ${primeLendingRate.effectiveFrom}`}
-        photo={photos.counter}
-        photoId={photoId.counter}
+        photo={photos.shopkeeper}
         photoField="lavender"
       />
 
@@ -50,10 +49,7 @@ export function WorkingCapitalPage() {
 
               <MediaPanel
                 className="mt-10 hidden lg:flex"
-                tone="blue"
                 photo={photos.business}
-                id={photoId.business}
-                maxWidth={320}
               />
             </div>
 

@@ -7,7 +7,7 @@ import { TextField } from "../components/ui/TextField";
 import { PhoneIcon } from "../assets/icons";
 import { branchDirectory } from "../data/branch-directory";
 import { nodalOfficer, registeredOffice, selfService } from "../data/contact";
-import { photoId, photos } from "../data/photos";
+import { photos } from "../data/photos";
 
 /** Strips punctuation and case so "A R Street" matches "ar street". */
 function normalise(value: string) {
@@ -26,7 +26,7 @@ function BranchCard({
   email: string | null;
 }) {
   return (
-    <li className="flex flex-col gap-4 rounded-2xl border border-line bg-surface p-6 sm:p-7">
+    <li className="flex flex-col gap-4 rounded-2xl border border-hairline bg-surface p-6 sm:p-7">
       <h3 className="text-label font-medium">{name}</h3>
 
       <address className="not-italic text-meta leading-relaxed text-fg-muted">{address}</address>
@@ -81,7 +81,6 @@ export function ContactPage() {
         title="Contact us"
         description="The registered office, the numbers that answer without a queue, and every branch the bank runs."
         photo={photos.overseas}
-        photoId={photoId.overseas}
         photoField="lavender"
       />
 
@@ -122,7 +121,7 @@ export function ContactPage() {
               {selfService.map((item) => (
                 <li
                   key={item.label}
-                  className="rounded-2xl border border-line bg-lavender-soft p-6 text-ink sm:p-7"
+                  className="rounded-2xl bg-lavender-soft p-6 text-ink sm:p-7"
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
                     <h3 className="text-label font-medium">{item.label}</h3>
@@ -182,7 +181,7 @@ export function ContactPage() {
               ))}
             </ul>
           ) : (
-            <div className="mt-8 rounded-2xl border border-line bg-page p-8">
+            <div className="mt-8 rounded-2xl border border-hairline bg-page p-8">
               <p className="text-body-sm">
                 No branch matches “{query}”. Try the town instead of the branch name, or call
                 customer care on{" "}
@@ -207,7 +206,7 @@ export function ContactPage() {
               the next step.
             </p>
 
-            <div className="mt-9 rounded-2xl border border-line bg-surface p-7 sm:p-8">
+            <div className="mt-9 rounded-2xl border border-hairline bg-surface p-7 sm:p-8">
               <p className="text-meta text-fg-muted">{nodalOfficer.role}</p>
               <h3 className="mt-2 text-h3">{nodalOfficer.name}</h3>
 

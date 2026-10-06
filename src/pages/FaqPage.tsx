@@ -5,7 +5,7 @@ import { Accordion } from "../components/ui/Accordion";
 import { CalloutPanel } from "../components/ui/CalloutPanel";
 import { PillButton } from "../components/ui/PillButton";
 import { LinkArrow } from "../components/ui/LinkArrow";
-import { photoId, photos } from "../data/photos";
+import { photos } from "../data/photos";
 import { faqGroups } from "../data/faq-page";
 import type { FaqBlock } from "../types";
 
@@ -57,8 +57,7 @@ export function FaqPage() {
       <PageHeader
         title="Frequently asked questions"
         description="Deposits, nomination, and the rules that apply to NRI accounts. If your question is not answered here, customer care is on 1800 220 854."
-        photo={photos.counter}
-        photoId={photoId.counter}
+        photo={photos.mobile}
         photoField="lavender"
       />
 

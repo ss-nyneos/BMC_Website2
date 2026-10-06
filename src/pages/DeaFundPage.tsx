@@ -6,7 +6,7 @@ import { CalloutPanel } from "../components/ui/CalloutPanel";
 import { PillButton } from "../components/ui/PillButton";
 import { LinkArrow } from "../components/ui/LinkArrow";
 import { ExternalIcon } from "../assets/icons";
-import { photoId, photos } from "../data/photos";
+import { photos } from "../data/photos";
 import { deafClaimSteps, deafDocuments, deafIntro } from "../data/deaf";
 
 /**
@@ -27,7 +27,6 @@ export function DeaFundPage() {
         title="DEA Fund: unclaimed deposits"
         description="Accounts and deposits left inoperative for ten years are transferred to the Reserve Bank's Depositor Education and Awareness Fund. The money remains claimable."
         photo={photos.heritage}
-        photoId={photoId.heritage}
         photoField="lavender"
       />
 
@@ -84,7 +83,7 @@ export function DeaFundPage() {
                   href={document.href}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="group flex min-h-[4.5rem] items-center justify-between gap-5 rounded-2xl border border-line bg-lavender-soft p-6 text-ink transition-colors duration-200 ease-out-quint hover:bg-lavender"
+                  className="group flex min-h-[4.5rem] items-center justify-between gap-5 rounded-2xl bg-lavender-soft p-6 text-ink transition-colors duration-200 ease-out-quint hover:bg-lavender"
                 >
                   <span className="text-body-sm font-medium">
                     {document.label}

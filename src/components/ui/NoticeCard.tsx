@@ -6,7 +6,7 @@ export function NoticeCard({ notice }: { notice: Notice }) {
   return (
     <a
       href={notice.href}
-      className="group flex items-center justify-between gap-6 rounded-2xl border border-line bg-surface p-6 transition-colors duration-200 ease-out-quint hover:bg-lavender-soft hover:text-ink sm:p-7"
+      className="fill-wipe group flex items-center justify-between gap-6 rounded-2xl border border-hairline bg-surface p-6 transition-[color,transform] duration-200 ease-out-quint hover:text-ink active:scale-[0.99] sm:p-7"
     >
       <span>
         <span className="block text-body-sm font-medium">{notice.title}</span>

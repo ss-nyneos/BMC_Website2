@@ -10,7 +10,9 @@ export type TabItem = {
  * End jump to the ends, and only the selected tab is in the tab order, which is
  * the roving-tabindex pattern screen-reader users expect.
  *
- * The tabs themselves are pills, matching the shape language of the page.
+ * The tabs themselves are pills, matching the shape language of the page. A
+ * panel fades up as it is shown: CSS animations restart when an element leaves
+ * `hidden`, so switching tabs replays it with no extra state.
  */
 export function Tabs({ items, className = "" }: { items: TabItem[]; className?: string }) {
   const [selected, setSelected] = useState(0);
@@ -69,10 +71,10 @@ export function Tabs({ items, className = "" }: { items: TabItem[]; className?: 
               aria-controls={`${baseId}-panel-${index}`}
               tabIndex={isSelected ? 0 : -1}
               onClick={() => setSelected(index)}
-              className={`h-12 rounded-pill px-6 text-label font-medium transition-colors duration-200 ease-out-quint ${
+              className={`h-12 rounded-pill px-6 text-label font-medium transition-[color,background-color,transform] duration-200 ease-out-quint ${
                 isSelected
                   ? "bg-purple text-ink"
-                  : "border border-line text-fg hover:bg-lavender-soft hover:text-ink"
+                  : "fill-wipe fill-wipe-x border border-line text-fg hover:text-ink active:scale-[0.97]"
               }`}
             >
               {item.label}
@@ -89,7 +91,7 @@ export function Tabs({ items, className = "" }: { items: TabItem[]; className?: 
           aria-labelledby={`${baseId}-tab-${index}`}
           hidden={index !== selected}
           tabIndex={0}
-          className="mt-9 focus-visible:outline-none"
+          className="mt-9 animate-panel-in focus-visible:outline-none"
         >
           {item.panel}
         </div>

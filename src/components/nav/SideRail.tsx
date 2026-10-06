@@ -4,6 +4,7 @@ import { utilityLinks } from "../../data/nav";
 import { latestNotice, railStandingNote } from "../../data/rail";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { SideDrawer } from "./SideDrawer";
+import { ScrollMeter } from "./ScrollMeter";
 
 /**
  * The site's whole navigation: a fixed rail on the right edge, and the drawer
@@ -43,6 +44,8 @@ export function SideRail() {
         className="fixed inset-y-0 right-0 z-modal flex w-18 flex-col items-center justify-between border-l border-line bg-page py-5"
         style={{ width: RAIL_WIDTH }}
       >
+        <ScrollMeter />
+
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}

@@ -8,7 +8,7 @@ import { BulletList } from "./BulletList";
  */
 function NumberedStage({ stage }: { stage: Stage }) {
   return (
-    <li className="rounded-2xl border border-line bg-surface p-7 sm:p-9">
+    <li className="rounded-2xl border border-hairline bg-surface p-7 sm:p-9">
       <div className="flex items-center gap-4">
         <span
           aria-hidden="true"

@@ -14,6 +14,11 @@ type CircleArrowProps = {
  * the spec forbids typing a literal arrow glyph into copy.
  *
  * Always decorative. The label it sits beside carries the meaning.
+ *
+ * It carries two arrows in one grid cell. When the parent `group` is hovered,
+ * the first slides out through the right edge and the second slides in from
+ * the left (`.arrow-swap` in globals.css), so the chip appears to move forward
+ * a step without moving at all.
  */
 const tones: Record<ArrowTone, string> = {
   lavender: "bg-lavender text-ink",
@@ -31,8 +36,9 @@ export function CircleArrow({ tone = "lavender", size = "md", className = "" }: 
   return (
     <span
       aria-hidden="true"
-      className={`inline-grid shrink-0 place-items-center rounded-pill transition-transform duration-200 ease-out-quint ${tones[tone]} ${sizes[size]} ${className}`}
+      className={`arrow-swap inline-grid shrink-0 place-items-center overflow-hidden rounded-pill transition-transform duration-200 ease-out-quint ${tones[tone]} ${sizes[size]} ${className}`}
     >
+      <ArrowRightIcon />
       <ArrowRightIcon />
     </span>
   );

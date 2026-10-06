@@ -20,7 +20,7 @@ export function AppDownload() {
   return (
     <section aria-labelledby="app-heading" className="bg-page py-4 lg:py-6">
       <Container>
-        <div className="reveal overflow-hidden rounded-2xl border border-line bg-purple px-6 py-14 text-ink sm:px-10 sm:py-16 lg:px-16">
+        <div className="reveal overflow-hidden rounded-2xl bg-purple px-6 py-14 text-ink sm:px-10 sm:py-16 lg:px-16">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
             <div>
               <h2 id="app-heading" className="max-w-[16ch] text-h2">
@@ -63,8 +63,10 @@ export function AppDownload() {
               </div>
             </div>
 
-            <div className="mx-auto w-full max-w-[380px]">
+            {/* The phones drift inside their own frame as the band scrolls past. */}
+            <div className="mx-auto w-full max-w-[380px] overflow-hidden rounded-xl">
               <img
+                data-parallax="0.06"
                 src={photos.devices.src}
                 srcSet={srcSet(photoId.devices, photos.devices.width, photos.devices.height)}
                 alt={photos.devices.alt}
@@ -72,7 +74,7 @@ export function AppDownload() {
                 height={photos.devices.height}
                 loading="lazy"
                 decoding="async"
-                className="h-auto w-full rounded-xl object-cover"
+                className="parallax-img block h-auto w-full rounded-xl object-cover"
               />
             </div>
           </div>

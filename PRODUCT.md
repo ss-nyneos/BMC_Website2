@@ -37,8 +37,10 @@ These come from the design brief and override any default preference:
   cream `#F3EEE8`, at the client's request. Cream remains as the form-field
   fill. The site also opens in light mode whatever the operating system is set
   to; dark is opt-in through the toggle and is then remembered.
-- **Shape:** pill buttons with a circular arrow chip; photographs masked to
-  perfect circles; 32px radius on large panels.
+- **Shape:** pill buttons with a circular arrow chip; 32px radius on large
+  panels. Photographs fill their whole card (full bleed, no coloured field or
+  ring), at the client's request on 2026-10-02. Circles survive only in the
+  homepage hero cluster and the small photo beside inner-page titles.
 - **Structure:** colour-blocked panels, not cards with drop shadows. The only
   shadow in the system is on menus and modals.
 

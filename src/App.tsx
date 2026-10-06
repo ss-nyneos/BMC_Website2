@@ -4,6 +4,7 @@ import { SideRail, RAIL_WIDTH } from "./components/nav/SideRail";
 import { Footer } from "./components/sections/Footer";
 import { NoticeModal } from "./components/ui/NoticeModal";
 import { useReveal } from "./hooks/useReveal";
+import { useParallax } from "./hooks/useParallax";
 import { useLinkInterception, useRoute, useRouteChangeEffects } from "./router";
 import { HomePage } from "./pages/HomePage";
 import { ContactPage } from "./pages/ContactPage";
@@ -58,6 +59,7 @@ export default function App() {
   const path = useRoute();
 
   useReveal(path);
+  useParallax(path);
   useLinkInterception();
   useRouteChangeEffects(path);
 

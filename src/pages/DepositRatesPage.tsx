@@ -7,7 +7,7 @@ import { CalloutPanel } from "../components/ui/CalloutPanel";
 import { MediaPanel } from "../components/ui/MediaPanel";
 import { PillButton } from "../components/ui/PillButton";
 import { LinkArrow } from "../components/ui/LinkArrow";
-import { photoId, photos } from "../data/photos";
+import { photos } from "../data/photos";
 import {
   depositRateNotes,
   domesticRates,
@@ -64,8 +64,7 @@ export function DepositRatesPage() {
         title="Deposit rates"
         description="Interest rates on domestic, NRO, NRE and FCNR(B) deposits. Rates are per annum and are subject to change."
         meta={`Domestic, NRO and NRE rates effective ${domesticRatesEffective}`}
-        photo={photos.heroSmiling}
-        photoId={photoId.heroSmiling}
+        photo={photos.neighbourhood}
         photoField="mint"
       />
 
@@ -157,10 +156,7 @@ export function DepositRatesPage() {
               <p className="text-body-sm text-fg-muted">{fcnrNote}</p>
               <MediaPanel
                 className="hidden sm:flex"
-                tone="blue"
                 photo={photos.overseas}
-                id={photoId.overseas}
-                maxWidth={280}
               />
             </div>
           </div>

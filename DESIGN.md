@@ -35,8 +35,8 @@ reads correctly in both themes with no `dark:` prefixes.
 
 The page is white in light mode and `#0E0722` in dark. `page` and `surface` are
 therefore the same colour in light mode and diverge in dark, which is why any
-inset white panel carries a hairline: without it the panel would have no edge
-against a white page. Cream survives in the palette as the form-field fill,
+inset white panel carries a hairline (`border-hairline`, ink at 12% / cream at
+16%): without it the panel would have no edge against a white page. Cream survives in the palette as the form-field fill,
 where it carries the brand's warmth without tinting the whole page.
 
 The mistake this split prevents: using `text-fg` on a lavender panel. In dark
@@ -51,15 +51,40 @@ invert. `TwoToneText` carries a `tone` prop for exactly this reason.
 | page, surface | `fg` |
 | orange | markers only, never a text surface |
 | ink | `white` (pill buttons only) |
+| photograph under the ink scrim | `white` (rate cards only) |
 
 No accent panel carries `white` body text any more. `#3FA9F6` does not clear
 4.5:1 against white, so the removal of the royal blue took the `white`-on-accent
 pairing with it. The `on-dark` utility — which swaps the focus ring to a white
 halo where a page-coloured halo would be invisible — is consequently unused, and
-stays in `globals.css` only for a future dark surface. Every accent panel carries
-a `border border-line` hairline, because each sits close enough to white in
-luminance that the panel edge needs drawing against the page — the same reasoning
-that gives dark-mode white panels a hairline.
+stays in `globals.css` only for a future dark surface.
+
+**Photo cards.** Photographs fill their card edge to edge. There is no
+coloured field, ring or border; `bg-ink` shows only while the file loads.
+`MediaPanel` is the one implementation. `PhotoCard` (the "Find your way in"
+trio) wraps it in a link, and the rate cards share its scrim approach. Text
+on a photograph is always white, over an ink scrim that is darkest where the
+text sits: bottom-weighted on `MediaPanel`, plus a lighter top layer on the
+rate cards behind their icon. Contrast cannot be read from computed colour
+here, so it is measured from pixels with the text hidden. As of 2026-10-02
+all 80 checks pass at 360 to 1440px. The tightest are "NRI and foreign
+exchange" at 3.4:1 (large text, needs 3) at 360px, and the vehicle card's icon
+at 3.8:1.
+
+Where the photos come from is set out in `data/photos.ts` and
+`docs/image-briefs.md`. The bank publishes no usable photography, so stock
+fills the gaps. It never shows the municipal "BMC" building, another
+financial firm's name, or an app screen. The home and gold photographs are the bank's own, cropped in
+`public/photos` so the gold original's "Trusted by Millions" poster never
+appears (offsets in `data/photos.ts`).
+
+**Card borders.** Coloured cards (sky blue, mint, sage, lavender) carry no
+border: the fill is the edge. White cards take `border-hairline`. Never put a
+bare `border-line` on a card. The `line` token accepts Tailwind's alpha
+modifier, so without one it renders at full-strength ink. That is how every
+card on the site came to have a black outline until 2026-10-02. Solid
+`border-line` stays on buttons, the rail and form controls, where a strong
+edge is the affordance.
 
 ## Logo
 
@@ -110,15 +135,71 @@ Nothing else takes a shadow. Structure comes from colour blocks and hairlines.
 
 ## Motion
 
-- Hero: one orchestrated entrance, staggered by `animation-delay`.
-- Marquee: continuous, pauses on hover and focus-within, static under reduced
-  motion.
-- `TwoToneText`: optional scroll-linked fill, static two-tone otherwise.
-- Everything else: interaction motion only.
+No animation library. Everything is CSS plus two hooks in `App`: `useReveal`
+(one IntersectionObserver) and `useParallax` (one rAF-throttled scroll pass).
+Easing is ease-out quint or expo throughout; nothing bounces.
 
-`useReveal` adds `js-motion` to `<html>` only when motion is permitted, and that
-class is what arms the hidden start state. Without JS, under reduced motion, or
-in a headless render, every `.reveal` block ships plainly visible.
+**Entrances.**
+
+- Hero: each word of the brand line rises out of its own clipped line box, 70ms
+  apart, then the standfirst, buttons and photo cluster follow.
+- Inner pages: `PageHeader` rises title, standfirst and photo in sequence.
+  `<main>` remounts per route, so this doubles as the page transition.
+- Scroll reveals come in three variants, each fitted to what it reveals rather
+  than one fade on every section:
+  - `.reveal`: a single block rises 16px.
+  - `.reveal-group`: the children pop up in sequence. `useReveal` numbers them
+    with `--i`, capped at 6, so no component threads an index through.
+  - `.reveal-split`: built into `SplitPanel`. The media panel wipes up with
+    `clip-path`, its circle photo settles from 0.84, and the text half rises a
+    beat later.
+- The application `Timeline` draws itself in order. Each dot lands, then the
+  rail runs to the next step, sequenced by `--step`. It is the one reveal that
+  carries information: the order is the content.
+- `TwoToneText`: optional scroll-linked fill, static two-tone otherwise.
+
+**Parallax.** `data-parallax="n"` drifts an element by `n` times its own height
+when its container is one viewport from the centre of the screen. Positive
+values lag the scroll and negative values lead it. The position is measured on
+the parent so the transform never feeds back into the measurement. Drift is
+halved below 768px.
+
+- Circle photos take `parallax={0.07}` and the image moves inside the mask.
+  `.parallax-img` oversizes it by 16%, so any drift under 0.08 never shows an
+  edge.
+- The hero's two photo columns drift in opposite directions (0.05 / -0.04).
+- The app band's device photo drifts inside its frame.
+
+**Hover and press.** Hover styles apply only on devices that can hover
+(`future.hoverOnlyWhenSupported`), so a tap never leaves a card stuck.
+
+- `.fill-wipe`: the lavender-soft hover fill sweeps up from the bottom (cards)
+  or in from the left (`.fill-wipe-x`, pill rows, outline pills, tabs). In dark
+  mode it crossfades instead, because the label flips to ink on hover and a
+  sweep would leave it dark-on-dark for a moment.
+- `CircleArrow` carries two arrows. On hover the first exits right and the
+  second enters from the left.
+- `LinkArrow` draws its underline in from the left.
+- Rate and pillar cards lift on hover. Pillar photos zoom inside their circle
+  using the independent `scale` property, which composes with parallax.
+- Every pill and card presses to 0.97 to 0.99 on `:active`.
+- The rail carries `ScrollMeter`, a 2px reading-progress line on its inner
+  edge.
+
+**Pop-ups.** `Modal` enters as a bottom sheet below `sm` and grows from the
+centre above it. The scrim blurs the page by 3px, the one place blur is used:
+it marks the page as present but not in focus. Closing plays a shorter exit
+(about half the entrance) before unmounting. The dialog renders on the very
+render `open` flips true, because the focus trap needs the panel in the DOM
+when its effect runs. Tab panels fade up on every switch: a CSS animation
+restarts when an element leaves `hidden`.
+
+**Reduced motion and no-JS.** `useReveal` adds `js-motion` to `<html>` only when
+motion is permitted, and every hidden start state is scoped to that class.
+Without JS, under reduced motion, or in a headless render, every block ships
+plainly visible. `useParallax` does nothing, so no image is oversized. The
+global reduced-motion rule collapses every transition and keyframe to an
+instant change.
 
 ## Navigation
 
@@ -202,9 +283,9 @@ Colour on the inner pages then comes from three shared blocks, all built from th
 same tokens as the homepage's split panels and never a semantic `fg` token on a
 fixed accent:
 
-- `MediaPanel` — a circular photo on a `purple` / `mint` / `sage` field, the
-  media half of `SplitPanel` lifted out. Used in the loan and deposit pages'
-  two-column sections where a text column would otherwise leave dead space.
+- `MediaPanel`: a full-bleed photograph card, the media half of `SplitPanel`
+  lifted out. It is used in the loan and deposit pages' two-column sections,
+  where a text column would otherwise leave dead space.
 - `CalloutPanel` — the colour-blocked closing block (heading, one line, a pill),
   replacing the hairline-bordered white boxes the pages used to end on. Tones
   rotate `mint` / `sage` so the closing panel never merges with the sky-blue
